@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0F0E0D;
+    --ink-2: #3D3B38;
+    --ink-3: #7A7670;
+    --ink-4: #B8B4AD;
+    --paper: #F5F2EE;
+    --paper-2: #EDE9E3;
+    --paper-3: #E2DDD6;
+    --accent: #1B4332;
+    --accent-light: #D8F3DC;
+    --accent-mid: #52B788;
+    --rule: rgba(15,14,13,0.1);
+    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.7; font-weight: 300; }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--paper); border-bottom: 1px solid var(--rule);
+    padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 56px;
+  }
+  .nav-logo { font-family: var(--font-mono); font-size: 13px; font-weight: 500; color: var(--ink); letter-spacing: 0.04em; text-decoration: none; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 12px; font-weight: 400; color: var(--ink-3); text-decoration: none; letter-spacing: 0.03em; transition: color 0.15s; cursor: pointer; }
+  .nav-links a:hover { color: var(--ink); }
+
+  .container { max-width: 780px; margin: 0 auto; padding: 0 2rem; }
+
+  /* HERO */
+  .hero { padding: 7rem 0 5rem; border-bottom: 1px solid var(--rule); }
+  .hero-eyebrow {
+    font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+    color: var(--ink-3); letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px;
+  }
+  .hero-eyebrow::before { content: ''; display: block; width: 24px; height: 1px; background: var(--ink-4); }
+  .hero-title {
+    font-family: var(--font-display); font-size: clamp(2.2rem, 5vw, 3.4rem);
+    line-height: 1.1; font-weight: 400; color: var(--ink);
+    margin-bottom: 1.5rem; max-width: 620px;
+  }
+  .hero-title em { font-style: italic; color: var(--accent); }
+  .hero-sub { font-size: 17px; font-weight: 300; color: var(--ink-2); max-width: 500px; line-height: 1.65; margin-bottom: 2.5rem; }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-primary {
+    font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+    background: var(--accent); color: #fff; border: none; border-radius: 4px; padding: 10px 20px; cursor: pointer; transition: background 0.15s;
+  }
+  .btn-primary:hover { background: #0F2A1E; }
+  .btn-secondary {
+    font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+    background: transparent; color: var(--ink-2); border: 1px solid var(--rule); border-radius: 4px; padding: 10px 20px; cursor: pointer; transition: background 0.15s;
+  }
+  .btn-secondary:hover { background: var(--paper-2); }
+
+  /* SECTIONS */
+  section { padding: 5rem 0; border-bottom: 1px solid var(--rule); }
+  section:last-child { border-bottom: none; }
+  .section-header { display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start; margin-bottom: 3rem; }
+  .section-number { font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); letter-spacing: 0.06em; margin-bottom: 0.5rem; }
+  h3 { font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--ink-3); letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 1rem; }
+  h2 { font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 400; line-height: 1.2; color: var(--ink); margin-bottom: 1.25rem; }
+  p { color: var(--ink-2); margin-bottom: 1rem; font-weight: 300; }
+  p:last-child { margin-bottom: 0; }
+
+  /* CASE STUDIES */
+  .case-list { display: flex; flex-direction: column; gap: 0; }
+  .case-item {
+    display: grid; grid-template-columns: 1fr 2fr; gap: 3rem;
+    padding: 2.5rem 0; border-bottom: 1px solid var(--rule); align-items: start;
+    cursor: pointer; transition: background 0.15s;
+  }
+  .case-item:last-child { border-bottom: none; }
+  .case-item:hover .case-arrow { transform: translateX(4px); }
+  .case-left { display: flex; flex-direction: column; gap: 0.75rem; }
+  .case-num { font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); letter-spacing: 0.06em; }
+  .case-tag {
+    font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+    display: inline-block; padding: 3px 10px; border-radius: 20px;
+  }
+  .tag-health { background: var(--accent-light); color: var(--accent); }
+  .tag-enterprise { background: #D6E8FA; color: #1A3A5C; }
+  .tag-ai { background: #FDEBD0; color: #7B3F00; }
+  .case-thumb {
+    width: 100%; aspect-ratio: 4/3; border-radius: 8px;
+    border: 1px solid var(--rule); background: var(--paper-3);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-size: 10px; color: var(--ink-4); letter-spacing: 0.06em;
+    margin-top: 0.75rem;
+  }
+  .case-right { padding-top: 0.25rem; }
+  .case-title { font-family: var(--font-display); font-size: 1.5rem; font-weight: 400; color: var(--ink); margin-bottom: 0.75rem; line-height: 1.2; }
+  .case-desc { font-size: 14px; color: var(--ink-3); line-height: 1.6; margin-bottom: 1rem; }
+  .case-footer-row { display: flex; justify-content: space-between; align-items: center; margin-top: 1.25rem; }
+  .case-tools { font-family: var(--font-mono); font-size: 10px; color: var(--ink-4); letter-spacing: 0.04em; }
+  .case-arrow { font-size: 14px; color: var(--accent); transition: transform 0.2s; font-weight: 500; }
+
+  /* PROCESS */
+  .process-pipeline {
+    display: flex; align-items: stretch; gap: 0;
+    border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; margin-top: 1rem;
+  }
+  .pipe-step { flex: 1; padding: 1.25rem 1rem; border-right: 1px solid var(--rule); background: var(--paper); }
+  .pipe-step:last-child { border-right: none; }
+  .pipe-icon { font-family: var(--font-mono); font-size: 10px; color: var(--ink-4); letter-spacing: 0.06em; margin-bottom: 0.5rem; }
+  .pipe-label { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
+  .pipe-sub { font-size: 11px; color: var(--ink-3); line-height: 1.5; }
+
+  /* SKILLS */
+  .skill-categories { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1rem; }
+  .skill-cat-label { font-family: var(--font-mono); font-size: 10px; color: var(--ink-4); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.75rem; }
+  .skill-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+  .skill-pill { font-size: 13px; background: var(--paper-2); border: 1px solid var(--rule); border-radius: 20px; padding: 4px 12px; color: var(--ink-3); font-weight: 300; }
+
+  /* STATS */
+  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; margin: 2rem 0; }
+  .stat-cell { background: var(--paper); padding: 1.5rem; }
+  .stat-num { font-family: var(--font-display); font-size: 2rem; font-weight: 400; color: var(--accent); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-desc { font-size: 12px; color: var(--ink-3); line-height: 1.4; }
+
+  /* FOOTER */
+  footer { padding: 3rem 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+  .footer-note { font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); letter-spacing: 0.04em; }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-family: var(--font-mono); font-size: 11px; color: var(--accent); letter-spacing: 0.04em; text-decoration: none; cursor: pointer; }
+
+  .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .fade-in.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 640px) {
+    .section-header, .case-item, .skill-categories { grid-template-columns: 1fr; gap: 1rem; }
+    .process-pipeline { flex-direction: column; }
+    .pipe-step { border-right: none; border-bottom: 1px solid var(--rule); }
+    .stat-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">Sharika</span>
+  <ul class="nav-links">
+    <li><a>Work</a></li>
+    <li><a>Process</a></li>
+    <li><a>Skills</a></li>
+    <li><a>Contact</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="container">
+    <div class="hero-eyebrow">Product designer · Available for new opportunities</div>
+    <h1 class="hero-title">Making <em>complex, data-heavy</em> experiences feel simple</h1>
+    <p class="hero-sub">Hi, I'm Sharika — an AI-Enhanced Product Designer simplifying complex, data-heavy experiences in healthcare and enterprise products.</p>
+    <div class="hero-actions">
+      <button class="btn-primary">View my work</button>
+      <button class="btn-secondary">Download resume</button>
+    </div>
+  </div>
+</div>
+
+<section id="work">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div>
+        <div class="section-number">01</div>
+        <h3>Selected work</h3>
+      </div>
+      <div>
+        <h2>Four case studies across healthcare and enterprise</h2>
+        <p>Each project reflects a different slice of the same core challenge — designing clarity into systems where complexity is the default.</p>
+      </div>
+    </div>
+
+    <div class="case-list">
+      <div class="case-item fade-in">
+        <div class="case-left">
+          <span class="case-num">Case study 01</span>
+          <span class="case-tag tag-health">Healthcare</span>
+          <div class="case-thumb">[ Screen export ]</div>
+        </div>
+        <div class="case-right">
+          <div class="case-title">Designing for the gap between diagnosis and coverage</div>
+          <p class="case-desc">A concept feature for UST Healthproof's risk adjustment ecosystem — turning unstructured medical records into actionable diagnostic signals across four connected workflows.</p>
+          <div class="case-footer-row">
+            <span class="case-tools">Figma · UX Research · AI UX · Prototyping</span>
+            <span class="case-arrow">View case study →</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-item fade-in">
+        <div class="case-left">
+          <span class="case-num">Case study 02</span>
+          <span class="case-tag tag-enterprise">Enterprise</span>
+          <div class="case-thumb">[ Screen export ]</div>
+        </div>
+        <div class="case-right">
+          <div class="case-title">Simplifying a 200-screen analytics platform</div>
+          <p class="case-desc">Redesigning a sprawling enterprise analytics product into an intuitive self-serve experience — without losing the depth power users depend on.</p>
+          <div class="case-footer-row">
+            <span class="case-tools">Figma · Usability Testing · Design Systems</span>
+            <span class="case-arrow">View case study →</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-item fade-in">
+        <div class="case-left">
+          <span class="case-num">Case study 03</span>
+          <span class="case-tag tag-ai">AI product</span>
+          <div class="case-thumb">[ Screen export ]</div>
+        </div>
+        <div class="case-right">
+          <div class="case-title">Building trust into an AI triage assistant</div>
+          <p class="case-desc">Designing AI trust patterns for an emergency triage tool used by physicians — where explainability isn't a nice-to-have, it's the product.</p>
+          <div class="case-footer-row">
+            <span class="case-tools">Figma · AI UX · Research · Interaction Design</span>
+            <span class="case-arrow">View case study →</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-item fade-in">
+        <div class="case-left">
+          <span class="case-num">Case study 04</span>
+          <span class="case-tag tag-health">Healthcare</span>
+          <div class="case-thumb">[ Screen export ]</div>
+        </div>
+        <div class="case-right">
+          <div class="case-title">Reducing patient drop-off through digital onboarding</div>
+          <p class="case-desc">Redesigning a digital patient onboarding flow that reduced drop-off by 40% — by removing friction at the moments that matter most.</p>
+          <div class="case-footer-row">
+            <span class="case-tools">Figma · Journey Mapping · Usability Testing</span>
+            <span class="case-arrow">View case study →</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div>
+        <div class="section-number">02</div>
+        <h3>How I work</h3>
+      </div>
+      <div>
+        <h2>A process built around reducing ambiguity</h2>
+        <p>I work through complexity by making it legible — to users, to stakeholders, and to the teams building the product.</p>
+      </div>
+    </div>
+    <div class="process-pipeline fade-in">
+      <div class="pipe-step">
+        <div class="pipe-icon">STEP 01</div>
+        <div class="pipe-label">Discover</div>
+        <div class="pipe-sub">Research, interviews, and understanding the full problem space.</div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-icon">STEP 02</div>
+        <div class="pipe-label">Define</div>
+        <div class="pipe-sub">Synthesising insights into clear problem statements and measurable goals.</div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-icon">STEP 03</div>
+        <div class="pipe-label">Design</div>
+        <div class="pipe-sub">Iterating from wireframes to high-fidelity, testable prototypes.</div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-icon">STEP 04</div>
+        <div class="pipe-label">Test</div>
+        <div class="pipe-sub">Validating with real users and refining based on findings.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div>
+        <div class="section-number">03</div>
+        <h3>Skills & tools</h3>
+      </div>
+      <div>
+        <h2>What I bring to the table</h2>
+        <p>A mix of design craft, research rigour, and domain depth — with a particular focus on AI-augmented workflows, healthcare systems, and enterprise data products.</p>
+      </div>
+    </div>
+    <div class="stat-grid fade-in">
+      <div class="stat-cell">
+        <div class="stat-num">4+</div>
+        <div class="stat-desc">years designing for healthcare and enterprise domains</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">AI-first</div>
+        <div class="stat-desc">designing with and for AI systems — trust, explainability, and human oversight</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">End-to-end</div>
+        <div class="stat-desc">research through delivery, concept through system design</div>
+      </div>
+    </div>
+    <div class="skill-categories fade-in">
+      <div>
+        <div class="skill-cat-label">Design & craft</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Figma</span>
+          <span class="skill-pill">Prototyping</span>
+          <span class="skill-pill">Interaction design</span>
+          <span class="skill-pill">Design systems</span>
+          <span class="skill-pill">Data visualisation</span>
+          <span class="skill-pill">Accessibility</span>
+        </div>
+      </div>
+      <div>
+        <div class="skill-cat-label">Research & strategy</div>
+        <div class="skill-pills">
+          <span class="skill-pill">UX research</span>
+          <span class="skill-pill">Usability testing</span>
+          <span class="skill-pill">Journey mapping</span>
+          <span class="skill-pill">AI UX</span>
+          <span class="skill-pill">Healthcare UX</span>
+          <span class="skill-pill">Enterprise products</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <footer class="fade-in">
+    <span class="footer-note">Sharika · AI-Enhanced Product Designer · 2026</span>
+    <div class="footer-links">
+      <a>Email</a>
+      <a>LinkedIn</a>
+      <a>Dribbble</a>
+    </div>
+  </footer>
+</div>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
