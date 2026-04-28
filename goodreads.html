@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Redesigning Goodreads — Sharika</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0F0E0D; --ink-2: #3D3B38; --ink-3: #7A7670; --ink-4: #B8B4AD;
+    --paper: #F5F2EE; --paper-2: #EDE9E3; --paper-3: #E2DDD6;
+    --accent: #1B4332; --accent-light: #D8F3DC; --accent-mid: #52B788;
+    --warn: #7B3F00; --warn-light: #FDEBD0;
+    --info: #1A3A5C; --info-light: #D6E8FA;
+    --rule: rgba(15,14,13,0.1);
+    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.7; font-weight: 300; }
+
+  nav {
+    position: sticky; top: 0; z-index: 100; background: var(--paper);
+    border-bottom: 1px solid var(--rule); padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between; height: 56px;
+  }
+  .nav-logo { font-family: var(--font-mono); font-size: 13px; font-weight: 500; color: var(--ink); letter-spacing: 0.04em; text-decoration: none; cursor: pointer; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 12px; color: var(--ink-3); text-decoration: none; letter-spacing: 0.03em; cursor: pointer; transition: color 0.15s; }
+  .nav-links a:hover { color: var(--ink); }
+
+  .container { max-width: 780px; margin: 0 auto; padding: 0 2rem; }
+  .container-wide { max-width: 1040px; margin: 0 auto; padding: 0 2rem; }
+  section { padding: 5rem 0; border-bottom: 1px solid var(--rule); }
+  section:last-child { border-bottom: none; }
+
+  /* HERO */
+  .hero { padding: 7rem 0 5rem; border-bottom: 1px solid var(--rule); }
+  .hero-eyebrow {
+    font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+    color: var(--ink-3); letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px;
+  }
+  .hero-eyebrow::before { content: ''; display: block; width: 24px; height: 1px; background: var(--ink-4); }
+  .hero-title {
+    font-family: var(--font-display); font-size: clamp(2.2rem, 5vw, 3.6rem);
+    line-height: 1.1; font-weight: 400; color: var(--ink); margin-bottom: 1.5rem; max-width: 640px;
+  }
+  .hero-title em { font-style: italic; color: var(--accent); }
+  .hero-sub { font-size: 17px; font-weight: 300; color: var(--ink-2); max-width: 520px; line-height: 1.65; margin-bottom: 0.75rem; }
+  .hero-disclaimer {
+    font-family: var(--font-mono); font-size: 10px; color: var(--ink-4);
+    letter-spacing: 0.05em; margin-bottom: 2.5rem;
+  }
+  .hero-meta { display: flex; gap: 2rem; flex-wrap: wrap; }
+  .meta-item { display: flex; flex-direction: column; gap: 3px; }
+  .meta-label { font-family: var(--font-mono); font-size: 10px; color: var(--ink-4); letter-spacing: 0.08em; text-transform: uppercase; }
+  .meta-val { font-size: 13px; font-weight: 500; color: var(--ink-2); }
+
+  /* TYPOGRAPHY */
+  h2 { font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2.1rem); font-weight: 400; line-height: 1.2; color: var(--ink); margin-bottom: 1.25rem; }
+  h3 { font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--ink-3); letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 1rem; }
+  p { color: var(--ink-2); margin-bottom: 1rem; font-weight: 300; }
+  p:last-child { margin-bottom: 0; }
+
+  .section-header { display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start; margin-bottom: 3rem; }
+  .section-number { font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); letter-spacing: 0.06em; margin-bottom: 0.5rem; }
+
+  /* PROBLEM QUOTE */
+  .problem-quote { border-left: 2px solid var(--accent); padding: 1.25rem 1.5rem; background: var(--paper-2); border-radius: 0 8px 8px 0; margin: 2rem 0; }
+  .problem-quote p { font-family: var(--font-display); font-size: 1.1rem; font-style: italic; color: var(--ink); line-height: 1.5; margin: 0; }
+  .problem-quote cite { display: block; font-family: var(--font-mono); font-size: 10px; color: var(--ink-4); letter-spacing: 0.06em; margin-top: 0.5rem; font-style: normal; }
+
+  /* STRATEGY BLOCK */
+  .strategy-block { background: var(--paper-2); border: 1px solid var(--rule); border-radius: 10px; padding: 1.5rem; margin: 2rem 0; }
+  .strategy-label { font-family: var(--font-mono); font-size: 10px; font-weight: 500; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .strategy-block h2 { font-size: 1.25rem; margin-bottom: 0.75rem; }
+  .strategy-list { list-style: none; }
+  .strategy-list li { font-size: 13px; color: var(--ink-3); padding: 0.35rem 0; border-bottom: 1px solid var(--rule); display: flex; align-items: baseline; gap: 10px; }
+  .strategy-list li:last-child { border-bottom: none; }
+  .strategy-list li::before { content: '→'; font-family: var(--font-mono); font-size: 10px; color: var(--accent-mid); flex-shrink: 0; }
+
+  /* PROBLEM PAIR */
+  .problem-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; margin: 2rem 0; }
+  .problem-cell { background: var(--paper); padding: 1.25rem; }
+  .problem-cell-label { font-family: var(--font-mono); font-size: 10px; color: var(--ink-4); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .problem-cell p { font-size: 13px; color: var(--ink-3); margin: 0; }
+
+  /* SCREEN BLOCKS */
+  .screen-block { margin: 3rem 0; }
+  .screen-label { display: flex; align-items: center; gap: 12px; margin-bottom: 1rem; }
+  .screen-tag { font-family: var(--font-mono); font-size: 10px; font-weight: 500; padding: 3px 10px; border-radius: 20px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .tag-before { background: #FDDEDE; color: #6B1C1C; }
+  .tag-after { background: var(--accent-light); color: var(--accent); }
+  .tag-screen { background: var(--info-light); color: var(--info); }
+  .tag-detail { background: var(--warn-light); color: var(--warn); }
+  .screen-name { font-size: 13px; font-weight: 500; color: var(--ink-2); }
+  .screen-frame { border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; background: var(--paper-3); }
+  .screen-frame-bar { background: var(--paper-2); border-bottom: 1px solid var(--rule); padding: 8px 14px; display: flex; align-items: center; gap: 6px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--rule); }
+  .screen-placeholder { min-height: 220px; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 10px; color: var(--ink-4); letter-spacing: 0.06em; }
+  .screen-caption { font-size: 13px; color: var(--ink-3); margin-top: 1rem; font-style: italic; }
+
+  /* SCREEN COMPARE */
+  .screen-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 2rem 0; }
+
+  /* PIPELINE */
+  .pipeline { display: flex; align-items: stretch; gap: 0; margin: 2.5rem 0; border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; }
+  .pipe-step { flex: 1; padding: 1.25rem 1rem; border-right: 1px solid var(--rule); background: var(--paper); }
+  .pipe-step:last-child { border-right: none; }
+  .pipe-icon { font-family: var(--font-mono); font-size: 10px; color: var(--ink-4); letter-spacing: 0.06em; margin-bottom: 0.5rem; }
+  .pipe-label { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
+  .pipe-sub { font-size: 11px; color: var(--ink-3); }
+
+  /* DECISION LIST */
+  .decision-list { list-style: none; margin: 1.5rem 0; }
+  .decision-list li { padding: 1rem 0; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 2fr 3fr; gap: 2rem; }
+  .decision-list li:last-child { border-bottom: none; }
+  .decision-key { font-size: 13px; font-weight: 500; color: var(--ink); line-height: 1.4; }
+  .decision-why { font-size: 13px; color: var(--ink-3); line-height: 1.5; }
+
+  /* IMPACT */
+  .impact-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 2rem 0; }
+  .impact-card { background: var(--paper-2); border: 1px solid var(--rule); border-radius: 10px; padding: 1.25rem; }
+  .impact-metric { font-family: var(--font-display); font-size: 1.6rem; color: var(--accent); margin-bottom: 0.3rem; }
+  .impact-label { font-size: 12px; color: var(--ink-3); line-height: 1.4; }
+
+  /* EVIDENCE */
+  .evidence-pills { display: flex; gap: 8px; flex-wrap: wrap; margin: 1rem 0; }
+  .evidence-pill { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; padding: 4px 12px; border-radius: 20px; background: var(--paper-2); border: 1px solid var(--rule); color: var(--ink-3); }
+
+  /* FOOTER */
+  footer { padding: 3rem 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+  .footer-note { font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); letter-spacing: 0.04em; }
+  .footer-link { font-family: var(--font-mono); font-size: 11px; color: var(--accent); letter-spacing: 0.04em; text-decoration: none; cursor: pointer; }
+
+  .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .fade-in.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 640px) {
+    .section-header, .decision-list li, .problem-pair, .screen-compare, .impact-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .pipeline { flex-direction: column; }
+    .pipe-step { border-right: none; border-bottom: 1px solid var(--rule); }
+    .pipe-step:last-child { border-bottom: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html" style="text-decoration:none;">← Sharika</a>
+  <ul class="nav-links">
+    <li><a href="#problems">Problems</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#screens">Screens</a></li>
+    <li><a href="#decisions">Decisions</a></li>
+    <li><a href="#impact">Impact</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="container">
+    <div class="hero-eyebrow">Portfolio case study · Goodreads</div>
+    <h1 class="hero-title">Redesigning reading into a <em>habit worth keeping</em></h1>
+    <p class="hero-sub">A research-driven, speculative redesign of Goodreads — shifting the product from a social-first directory to a reading-first companion that respects how people actually track books.</p>
+    <p class="hero-disclaimer">Conceptual project for portfolio purposes. Not affiliated with or endorsed by Goodreads.</p>
+    <div class="hero-meta">
+      <div class="meta-item"><span class="meta-label">Role</span><span class="meta-val">Product designer</span></div>
+      <div class="meta-item"><span class="meta-label">Type</span><span class="meta-val">Speculative / concept</span></div>
+      <div class="meta-item"><span class="meta-label">Domain</span><span class="meta-val">Consumer app · Reading</span></div>
+      <div class="meta-item"><span class="meta-label">Screens</span><span class="meta-val">4 redesigned surfaces</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- PROBLEMS -->
+<section id="problems">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div>
+        <div class="section-number">01</div>
+        <h3>The problems</h3>
+      </div>
+      <div>
+        <h2>Two gaps where Goodreads quietly loses its users</h2>
+        <p>Goodreads has a loyalty problem masked as a discovery problem. The real friction isn't that users can't find books — it's that the product makes it hard to stay connected to the ones they're already reading, and buries the actions they return for most.</p>
+      </div>
+    </div>
+
+    <div class="problem-pair fade-in">
+      <div class="problem-cell">
+        <div class="problem-cell-label">Problem 01</div>
+        <p>A social-first homepage that leads with "Find Friends" over any reading action — making the core use case feel secondary from the first screen.</p>
+      </div>
+      <div class="problem-cell">
+        <div class="problem-cell-label">Problem 02</div>
+        <p>No quick way to add or organise books, and no sense of reading momentum — making the tracking experience feel like admin rather than habit.</p>
+      </div>
+    </div>
+
+    <div class="problem-quote fade-in">
+      <p>"I have not noticed a single improvement in years. The interface looks the same as it did a decade ago."</p>
+      <cite>— Goodreads user, Reddit</cite>
+    </div>
+
+    <div class="problem-quote fade-in">
+      <p>"Being able to quickly add books is entirely absent. It should be the most obvious thing."</p>
+      <cite>— Goodreads user, Reddit</cite>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section id="research">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div>
+        <div class="section-number">02</div>
+        <h3>Research</h3>
+      </div>
+      <div>
+        <h2>The voice of the user, unsolicited</h2>
+        <p>Rather than formal interviews, I turned to the spaces where Goodreads users speak honestly and at length — App Store reviews and Reddit threads. These sources surfaced unfiltered frustrations: patterns that repeat across hundreds of posts, unprompted, from users who care enough to complain.</p>
+      </div>
+    </div>
+
+    <div class="evidence-pills fade-in">
+      <span class="evidence-pill">App Store reviews</span>
+      <span class="evidence-pill">Reddit — r/goodreads</span>
+      <span class="evidence-pill">Reddit — r/books</span>
+    </div>
+
+    <div class="pipeline fade-in">
+      <div class="pipe-step">
+        <div class="pipe-icon">SIGNAL 01</div>
+        <div class="pipe-label">Social over reading</div>
+        <div class="pipe-sub">Homepage surfaces friends and feeds before any reading action.</div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-icon">SIGNAL 02</div>
+        <div class="pipe-label">No quick add</div>
+        <div class="pipe-sub">Adding a book to a shelf requires too many steps for a high-frequency task.</div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-icon">SIGNAL 03</div>
+        <div class="pipe-label">Stale interface</div>
+        <div class="pipe-sub">Users report no meaningful design changes in years, eroding trust in the product.</div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-icon">SIGNAL 04</div>
+        <div class="pipe-label">No momentum</div>
+        <div class="pipe-sub">No streaks, no contextual nudges — reading feels like a passive list, not a living habit.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCREENS -->
+<section id="screens">
+  <div class="container-wide">
+    <div class="container" style="padding:0;">
+      <div class="section-header fade-in">
+        <div>
+          <div class="section-number">03</div>
+          <h3>Screens</h3>
+        </div>
+        <div>
+          <h2>Four surfaces redesigned around the reading act</h2>
+          <p>Each screen targets a specific moment of friction — from the first thing users see, to the micro-interaction of logging a reading update.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" style="padding:0;">
+
+      <div class="screen-block fade-in">
+        <div class="screen-label">
+          <span class="screen-tag tag-screen">Screen 01</span>
+          <span class="screen-name">Homepage — before vs after</span>
+        </div>
+        <div class="screen-compare">
+          <div>
+            <div class="screen-frame">
+              <div class="screen-frame-bar"><div class="dot"></div><div class="dot"></div><div class="dot"></div><span style="font-family:var(--font-mono);font-size:10px;color:var(--ink-4);margin-left:6px;">Current design</span></div>
+              <img src="current-homepage.png" alt="Current Goodreads homepage showing an empty state with a 'Get started with Goodreads' modal and a prominent Find your friends CTA" style="width:100%;display:block;background:var(--paper-3);min-height:320px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <div class="screen-placeholder" style="display:none;">[ Current homepage — drop export here ]</div>
+            </div>
+            <p style="font-family:var(--font-mono);font-size:10px;color:var(--ink-4);letter-spacing:0.05em;margin-top:0.5rem;">Empty state leads with "Find your friends" as the primary CTA. No reading activity visible.</p>
+          </div>
+          <div>
+            <div class="screen-frame">
+              <div class="screen-frame-bar"><div class="dot"></div><div class="dot"></div><div class="dot"></div><span style="font-family:var(--font-mono);font-size:10px;color:var(--accent);margin-left:6px;">Redesign</span></div>
+              <img src="redesigned-homepage.png" alt="Redesigned Goodreads homepage showing a personalised welcome, currently reading books with progress bars, and Update Progress CTAs" style="width:100%;display:block;background:var(--paper-3);min-height:320px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <div class="screen-placeholder" style="display:none;">[ Redesigned homepage — drop export here ]</div>
+            </div>
+            <p style="font-family:var(--font-mono);font-size:10px;color:var(--accent);letter-spacing:0.05em;margin-top:0.5rem;">Personalised greeting + Currently Reading shelf with progress bars and Update Progress CTAs front and centre.</p>
+          </div>
+        </div>
+        <p class="screen-caption">The current design greets returning users with a social prompt — "Find your friends" — even when they have books actively in progress. The redesign flips the hierarchy: a personalised welcome surfaces the user's currently reading list immediately, with visual progress bars and contextual update actions. Discovery and social features move below the fold, becoming secondary to the primary reading workflow.</p>
+      </div>
+
+      <div class="screen-block fade-in">
+        <div class="screen-label">
+          <span class="screen-tag tag-after">Screen 02</span>
+          <span class="screen-name">My Books tab — redesigned navigation and CTAs</span>
+        </div>
+        <div class="screen-frame">
+          <div class="screen-frame-bar"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+          <img src="my-books-compare.png" alt="Before and after comparison of the My Books tab — flat text list vs rich shelf cards with book cover collages and book counts" style="width:100%;display:block;background:var(--paper-3);min-height:280px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="screen-placeholder" style="display:none;">[ My Books before/after — drop export here ]</div>
+        </div>
+        <p class="screen-caption">The current design presents shelves as a flat, text-heavy list — with "Update your reading progress" as the only visible action, buried above the fold. The redesign replaces this with rich shelf cards: book cover collages, clear counts, and a "Create New Shelf" CTA that gives users agency from the first tap. Scanning your library becomes visual, not administrative.</p>
+      </div>
+
+      <div class="screen-block fade-in">
+        <div class="screen-label">
+          <span class="screen-tag tag-detail">Screen 03</span>
+          <span class="screen-name">Currently Reading shelf — progress and quick add</span>
+        </div>
+        <div class="screen-frame">
+          <div class="screen-frame-bar"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+          <img src="currently-reading-compare.png" alt="Before and after of the Currently Reading shelf — metadata-heavy list vs progress bars with inline Add Books and Update actions" style="width:100%;display:block;background:var(--paper-3);min-height:280px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="screen-placeholder" style="display:none;">[ Currently Reading before/after — drop export here ]</div>
+        </div>
+        <p class="screen-caption">The current design fills the shelf with publishing metadata — ratings, publication dates, page counts — none of which helps a reader pick up where they left off. The redesign strips this back to what matters: progress bars showing percentage and page position, an inline "Update" action per book, and an "Add Books" CTA above the fold. Reading momentum is now visible at a glance.</p>
+      </div>
+
+      <div class="screen-block fade-in">
+        <div class="screen-label">
+          <span class="screen-tag tag-screen">Screen 04</span>
+          <span class="screen-name">Update screen — progress logging with journaling</span>
+        </div>
+        <div class="screen-frame">
+          <div class="screen-frame-bar"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+          <img src="update-screen-compare.png" alt="Before and after of the progress update screen — sparse page input vs tactile stepper, progress context, and private journaling field" style="width:100%;display:block;background:var(--paper-3);min-height:280px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="screen-placeholder" style="display:none;">[ Update screen before/after — drop export here ]</div>
+        </div>
+        <p class="screen-caption">The current update screen is purely transactional — a page input, a radio button, and an optional text field that reads as an afterthought. The redesign reframes the same interaction as a reading ritual: a tactile stepper for page input, the book's current progress bar as context, and a journaling field labelled "What did you think?" with a private toggle and placeholder copy that invites reflection rather than demanding it. Updating progress stops feeling like admin.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- DECISIONS -->
+<section id="decisions">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div>
+        <div class="section-number">04</div>
+        <h3>Design decisions</h3>
+      </div>
+      <div>
+        <h2>Choices worth explaining</h2>
+        <p>Each decision reflects a deliberate tension — between what the product was optimising for and what users were actually returning for.</p>
+      </div>
+    </div>
+
+    <ul class="decision-list fade-in">
+      <li>
+        <div class="decision-key">Discovery and social features moved below the fold, not removed</div>
+        <div class="decision-why">Goodreads' social layer has value — but leading with it misrepresents why most users open the app. Demoting, not deleting, preserves discoverability without making it the first thing readers have to navigate past.</div>
+      </li>
+      <li>
+        <div class="decision-key">Add Books surfaced inside the shelf, not behind a separate flow</div>
+        <div class="decision-why">High-frequency tasks should require the fewest steps possible. Placing the action where users already are — inside the shelf — removes a navigation detour that users repeatedly complained about.</div>
+      </li>
+      <li>
+        <div class="decision-key">Journaling is optional, private by default</div>
+        <div class="decision-why">Making reflection feel safe encourages use. A mandatory or public-first feature would read as social pressure — the opposite of what reading-tracking users want from a log.</div>
+      </li>
+      <li>
+        <div class="decision-key">Personalisation based on user activity, not algorithmic cold-start</div>
+        <div class="decision-why">Recommendations are only useful when they feel relevant. The redesigned homepage tailors content to what the user is actively reading and recently shelved — not a generic "readers also liked" feed.</div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- IMPACT -->
+<section id="impact">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div>
+        <div class="section-number">05</div>
+        <h3>Business impact</h3>
+      </div>
+      <div>
+        <h2>Improving relevance, reducing friction, and deepening engagement</h2>
+        <p>As a speculative concept, impact is framed as a hypothesis — grounded in the documented frustrations the redesign directly addresses.</p>
+      </div>
+    </div>
+
+    <div class="impact-grid fade-in">
+      <div class="impact-card">
+        <div class="impact-metric">↑ Relevance</div>
+        <div class="impact-label">Context-aware homepage surfaces content matched to each user's active reading — not a generic social feed</div>
+      </div>
+      <div class="impact-card">
+        <div class="impact-metric">↓ Friction</div>
+        <div class="impact-label">Quick-add and inline shelf actions reduce the steps between intent and completion for the most frequent in-app tasks</div>
+      </div>
+      <div class="impact-card">
+        <div class="impact-metric">↑ Retention</div>
+        <div class="impact-label">Progress logging paired with journaling creates a daily habit loop — giving users a reason to return beyond simply finishing a book</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <footer class="fade-in">
+    <span class="footer-note">Goodreads redesign · Speculative concept · Sharika · 2026</span>
+    <a class="footer-link" href="mailto:sharikabenny@gmail.com">Email me →</a>
+  </footer>
+</div>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
