@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+    (function () {
+      const saved = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', saved);
+    })();
+  </script>
+
+  <link rel="stylesheet" href="styles.css">
+</head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ClearChart — Sharika</title>
@@ -21,7 +30,13 @@
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body { background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.7; font-weight: 300; }
+   body { background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.7; font-weight: 300; transition: background 0.3s ease, color 0.3s ease; }
+  .theme-toggle { background: var(--paper-3); border: 1px solid var(--rule); border-radius: 20px; padding: 4px 10px; cursor: pointer; display: flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 10px; color: var(--ink-3); letter-spacing: 0.04em; transition: background 0.2s; }
+  .theme-toggle:hover { background: var(--paper-2); }
+  .theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 20px; }
+
+  .skip-link { position: absolute; top: -100%; left: 1rem; background: var(--accent); color: #fff; padding: 8px 16px; border-radius: 4px; font-family: var(--font-mono); font-size: 12px; text-decoration: none; z-index: 200; }
+  .skip-link:focus { top: 1rem; }
 
   nav { position: sticky; top: 0; z-index: 100; background: var(--paper); border-bottom: 1px solid var(--rule); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 56px; }
   .nav-logo { font-family: var(--font-mono); font-size: 13px; font-weight: 500; color: var(--ink); letter-spacing: 0.04em; }
