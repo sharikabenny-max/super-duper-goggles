@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink: #0F0E0D; --ink-2: #3D3B38; --ink-3: #2E2C2A; --ink-4: #4A4845;
+    --ink: #0F0E0D; --ink-2: #3D3B38; --ink-3: #7A7670; --ink-4: #B8B4AD;
     --paper: #F5F2EE; --paper-2: #EDE9E3; --paper-3: #E2DDD6;
     --accent: #1B4332; --accent-light: #D8F3DC; --accent-mid: #52B788;
     --warn: #7B3F00; --warn-light: #FDEBD0;
@@ -21,27 +21,20 @@
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body { background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.7; font-weight: 300; transition: background 0.3s ease, color 0.3s ease; }
-  .theme-toggle { background: var(--paper-3); border: 1px solid var(--rule); border-radius: 20px; padding: 4px 10px; cursor: pointer; display: flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 10px; color: var(--ink-3); letter-spacing: 0.04em; transition: background 0.2s; }
-  .theme-toggle:hover { background: var(--paper-2); }
-  .theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 20px; }
-
-  .skip-link { position: absolute; top: -100%; left: 1rem; background: var(--accent); color: #fff; padding: 8px 16px; border-radius: 4px; font-family: var(--font-mono); font-size: 12px; text-decoration: none; z-index: 200; }
-  .skip-link:focus { top: 1rem; }
+  body { background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.7; font-weight: 300; }
 
   nav { position: sticky; top: 0; z-index: 100; background: var(--paper); border-bottom: 1px solid var(--rule); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 56px; }
-  .nav-logo { font-family: var(--font-mono); font-size: 13px; font-weight: 500; color: var(--ink); letter-spacing: 0.04em; text-decoration: none; }
-  .nav-logo:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
+  .nav-logo { font-family: var(--font-mono); font-size: 13px; font-weight: 500; color: var(--ink); letter-spacing: 0.04em; }
   .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a { font-size: 12px; color: var(--ink-3); text-decoration: none; letter-spacing: 0.03em; transition: color 0.15s; }
+  .nav-links a { font-size: 12px; color: var(--ink-3); text-decoration: none; letter-spacing: 0.03em; cursor: pointer; transition: color 0.15s; }
   .nav-links a:hover { color: var(--ink); }
-  .nav-links a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
 
   .container { max-width: 780px; margin: 0 auto; padding: 0 2rem; }
   .container-wide { max-width: 1040px; margin: 0 auto; padding: 0 2rem; }
   section { padding: 5rem 0; border-bottom: 1px solid var(--rule); }
   section:last-child { border-bottom: none; }
 
+  /* HERO */
   .hero { padding: 7rem 0 5rem; border-bottom: 1px solid var(--rule); }
   .hero-eyebrow { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--ink-3); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px; }
   .hero-eyebrow::before { content: ''; display: block; width: 24px; height: 1px; background: var(--ink-4); }
@@ -54,6 +47,7 @@
   .meta-label { font-family: var(--font-mono); font-size: 10px; color: var(--ink-4); letter-spacing: 0.08em; text-transform: uppercase; }
   .meta-val { font-size: 13px; font-weight: 500; color: var(--ink-2); }
 
+  /* TYPOGRAPHY */
   h2 { font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2.1rem); font-weight: 400; line-height: 1.2; color: var(--ink); margin-bottom: 1.25rem; }
   h3 { font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--ink-3); letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 1rem; }
   p { color: var(--ink-2); margin-bottom: 1rem; font-weight: 300; }
@@ -61,14 +55,17 @@
   .section-header { display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start; margin-bottom: 3rem; }
   .section-number { font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); letter-spacing: 0.06em; margin-bottom: 0.5rem; }
 
+  /* PROBLEM QUOTE */
   .problem-quote { border-left: 2px solid var(--accent); padding: 1.25rem 1.5rem; background: var(--paper-2); border-radius: 0 8px 8px 0; margin: 2rem 0; }
   .problem-quote p { font-family: var(--font-display); font-size: 1.1rem; font-style: italic; color: var(--ink); line-height: 1.5; margin: 0; }
 
+  /* STAT GRID */
   .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; margin: 2.5rem 0; }
   .stat-cell { background: var(--paper); padding: 1.5rem; }
   .stat-num { font-family: var(--font-display); font-size: 2.2rem; font-weight: 400; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
   .stat-desc { font-size: 12px; color: var(--ink-3); line-height: 1.4; }
 
+  /* USER GRID */
   .user-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 2rem 0; }
   .user-card { background: var(--paper-2); border: 1px solid var(--rule); border-radius: 10px; padding: 1.25rem; }
   .user-card.primary { border-color: var(--accent); background: var(--accent-light); }
@@ -77,6 +74,7 @@
   .user-name { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 0.4rem; }
   .user-goal { font-size: 12px; color: var(--ink-3); line-height: 1.5; }
 
+  /* PIPELINE */
   .pipeline { display: flex; align-items: stretch; gap: 0; margin: 2.5rem 0; border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; }
   .pipe-step { flex: 1; padding: 1.25rem 1rem; border-right: 1px solid var(--rule); background: var(--paper); }
   .pipe-step:last-child { border-right: none; }
@@ -84,6 +82,7 @@
   .pipe-label { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
   .pipe-user { font-size: 11px; color: var(--ink-3); }
 
+  /* SCREENS */
   .screen-block { margin: 3rem 0; }
   .screen-label { display: flex; align-items: center; gap: 12px; margin-bottom: 1rem; }
   .screen-tag { font-family: var(--font-mono); font-size: 10px; font-weight: 500; padding: 3px 10px; border-radius: 20px; letter-spacing: 0.06em; text-transform: uppercase; }
@@ -98,22 +97,23 @@
   .screen-placeholder { min-height: 280px; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 10px; color: var(--ink-4); letter-spacing: 0.06em; }
   .screen-caption { font-size: 13px; color: var(--ink-3); margin-top: 1rem; font-style: italic; }
 
+  /* DECISIONS */
   .decision-list { list-style: none; margin: 1.5rem 0; }
   .decision-list li { padding: 1rem 0; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 2fr 3fr; gap: 2rem; }
   .decision-list li:last-child { border-bottom: none; }
   .decision-key { font-size: 13px; font-weight: 500; color: var(--ink); line-height: 1.4; }
   .decision-why { font-size: 13px; color: var(--ink-3); line-height: 1.5; }
 
+  /* IMPACT */
   .impact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 2rem 0; }
   .impact-card { background: var(--paper-2); border: 1px solid var(--rule); border-radius: 10px; padding: 1.25rem; }
   .impact-metric { font-family: var(--font-display); font-size: 1.6rem; color: var(--accent); margin-bottom: 0.3rem; }
   .impact-label { font-size: 12px; color: var(--ink-3); line-height: 1.4; }
 
+  /* FOOTER */
   footer { padding: 3rem 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
   .footer-note { font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); letter-spacing: 0.04em; }
-  .footer-link { font-family: var(--font-mono); font-size: 11px; color: var(--accent); letter-spacing: 0.04em; text-decoration: none; }
-  .footer-link:hover { text-decoration: underline; }
-  .footer-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
+  .footer-link { font-family: var(--font-mono); font-size: 11px; color: var(--accent); letter-spacing: 0.04em; text-decoration: none; cursor: pointer; }
 
   .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
   .fade-in.visible { opacity: 1; transform: none; }
@@ -129,360 +129,300 @@
 </head>
 <body>
 
-<a class="skip-link" href="#main-content">Skip to main content</a>
-
-<nav aria-label="Main navigation">
-  <a class="nav-logo" href="index.html" aria-label="Back to Sharika's portfolio">← Sharika</a>
-  <div style="display:flex;align-items:center;gap:2rem;">
-    <ul class="nav-links" role="list">
-      <li><a href="#problem" aria-label="Jump to problem section">Problem</a></li>
-      <li><a href="#research" aria-label="Jump to research section">Research</a></li>
-      <li><a href="#users" aria-label="Jump to users section">Users</a></li>
-      <li><a href="#screens" aria-label="Jump to screens section">Screens</a></li>
-      <li><a href="#decisions" aria-label="Jump to design decisions section">Decisions</a></li>
-      <li><a href="#impact" aria-label="Jump to impact section">Impact</a></li>
-    </ul>
-    <button class="theme-toggle" id="themeToggle" aria-label="Switch to dark mode"><span id="toggleIcon">🌙</span><span id="toggleLabel">Dark</span></button>
-  </div>
+<nav>
+  <a class="nav-logo" href="index.html" style="text-decoration:none;">← Sharika Benny</a>
+  <ul class="nav-links">
+    <li><a href="#problem">Problem</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#users">Users</a></li>
+    <li><a href="#screens">Screens</a></li>
+    <li><a href="#decisions">Decisions</a></li>
+    <li><a href="#impact">Impact</a></li>
+  </ul>
 </nav>
 
-<main id="main-content">
-  <div class="hero">
-    <div class="container">
-      <p class="hero-eyebrow" aria-label="Portfolio case study for UST Healthproof">Portfolio case study · UST Healthproof</p>
-      <h1 class="hero-title">Designing for the gap between <em>diagnosis</em> and coverage</h1>
-      <p class="hero-sub">A systems-level concept for UST HealthProof’s risk adjustment ecosystem — using AI to turn unstructured medical records into actionable signals across four connected workflows.</p>
-      <p class="hero-disclaimer">Conceptual/speculative project for portfolio purposes.</p>
-      <dl class="hero-meta" aria-label="Project details">
-        <div class="meta-item"><dt class="meta-label">Role</dt><dd class="meta-val">Product designer</dd></div>
-        <div class="meta-item"><dt class="meta-label">Type</dt><dd class="meta-val">Concept / speculative</dd></div>
-        <div class="meta-item"><dt class="meta-label">Domain</dt><dd class="meta-val">Healthcare · Risk adjustment · BPaaS</dd></div>
-        <div class="meta-item"><dt class="meta-label">Screens</dt><dd class="meta-val">4 connected surfaces</dd></div>
-      </dl>
+<div class="hero">
+  <div class="container">
+    <div class="hero-eyebrow">Portfolio case study · UST Healthproof</div>
+    <h1 class="hero-title">Designing for the gap between <em>diagnosis</em> and coverage</h1>
+    <p class="hero-sub">A systems-level concept for UST HealthProof’s risk adjustment ecosystem — using AI to turn unstructured medical records into actionable signals across four connected workflows.</p>
+    <p class="hero-disclaimer">Conceptual/speculative project for portfolio purposes.</p>
+    <div class="hero-meta">
+      <div class="meta-item"><span class="meta-label">Role</span><span class="meta-val">Product designer</span></div>
+      <div class="meta-item"><span class="meta-label">Type</span><span class="meta-val">Concept / speculative</span></div>
+      <div class="meta-item"><span class="meta-label">Domain</span><span class="meta-val">Healthcare · Risk adjustment · BPaaS</span></div>
+      <div class="meta-item"><span class="meta-label">Screens</span><span class="meta-val">4 connected surfaces</span></div>
     </div>
   </div>
+</div>
 
-  <section id="problem" aria-labelledby="problem-heading">
-    <div class="container">
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div>
+        <div class="section-number">01</div>
+        <h3>The problem</h3>
+      </div>
+      <div>
+        <h2>Unstructured records create gaps that the plan can't close</h2>
+        <p>Health plans operating in risk adjustment ecosystems like UST HealthProof’s often face a persistent challenge: records arrive as PDFs, scanned documents, and handwritten notes—making diagnosis capture slow and inconsistent. When chronic conditions are missed or uncoded, HCC scores may be incomplete, increasing audit risk and plan mismatch.</p>
+        <p>The issue cascades across the care pipeline: coders can miss conditions hidden in chart notes, enrollment analysts may make tier decisions on incomplete data, and providers may start visits without a clear view of the patient’s known conditions.</p>
+      </div>
+    </div>
+
+    <div class="problem-quote fade-in">
+      <p>When a member’s documented conditions are not reflected in their risk score, plans can lose accuracy, revenue, and member trust.</p>
+    </div>
+
+    <div class="stat-grid fade-in">
+      <div class="stat-cell">
+        <div class="stat-num">Revenue at risk</div>
+        <div class="stat-desc">a single missed HCC condition can materially reduce annual reimbursement</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">Hidden cost</div>
+        <div class="stat-desc">manual chart retrieval and diagnosis extraction remain major productivity drains in coding workflows.</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">CMS RADV</div>
+        <div class="stat-desc">audit exposure increases when submitted risk scores are not supported by clinical documentation.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section id="research">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div>
+        <div class="section-number">02</div>
+        <h3>Research</h3>
+      </div>
+      <div>
+        <h2>Primary and secondary</h2>
+        <p>For primary research, I would conduct structured interviews with medical coders and care managers in the risk adjustment workflow, observing their interactions with Enrollment+™ to surface friction points, cognitive load triggers, and workaround behaviours. Findings would be mapped to a journey anchored to the chart review and HCC gap closure process.</p>
+        <p>For secondary research, I reviewed CMS-HCC risk adjustment model documentation and OIG audit reports on risk adjustment data validation to understand the regulatory and financial stakes of coding inaccuracies.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- USERS -->
+<section id="users">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div>
+        <div class="section-number">03</div>
+        <h3>Users</h3>
+      </div>
+      <div>
+        <h2>Three actors, one pipeline</h2>
+        <p>The product concept serves three distinct roles across the payer and provider ecosystem. Each has a different relationship to the data, a different definition of success, and a different tolerance for interface complexity.</p>
+      </div>
+    </div>
+    <div class="user-grid fade-in">
+      <div class="user-card primary">
+        <div class="user-role">Primary · Payer-side</div>
+        <div class="user-name">Medical coder / risk adjustment analyst</div>
+        <div class="user-goal">Reviews AI-flagged conditions, accepts or corrects HCC codes, and closes gaps for CMS submission. High volume, compliance-critical, needs speed and trust.</div>
+      </div>
+      <div class="user-card">
+        <div class="user-role">Secondary · Payer-side</div>
+        <div class="user-name">Enrollment ops analyst</div>
+        <div class="user-goal">Uses confirmed HCC data to assign risk tiers and match members to appropriate plans. Needs accurate segmentation, not raw clinical detail.</div>
+      </div>
+      <div class="user-card">
+        <div class="user-role">Tertiary · Provider-side</div>
+        <div class="user-name">Physician / care provider</div>
+        <div class="user-goal">Sees a pre-visit briefing with clinical context — conditions to confirm, open care gaps. Needs clinical framing, not billing language.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCREENS -->
+<section id="screens">
+  <div class="container-wide">
+    <div class="container" style="padding:0;">
       <div class="section-header fade-in">
         <div>
-          <div class="section-number" aria-hidden="true">01</div>
-          <h2 id="problem-heading">The problem</h2>
+          <div class="section-number">04</div>
+          <h3>Screens</h3>
         </div>
         <div>
-          <h3>Unstructured records create gaps the plan can't close</h3>
-          <p>Health plans using UST Healthproof's risk adjustment platform face a persistent problem: medical records arrive as PDFs, scanned documents, and handwritten notes — unstructured, inconsistent, and time-consuming to review manually. When chronic conditions go undocumented or uncoded, HCC risk scores are incomplete, leading to plan mismatch, CMS audit exposure, and members enrolled in the wrong coverage.</p>
-          <p>The problem compounds across the care pipeline. Coders miss conditions buried in chart notes. Enrollment analysts make tier decisions on incomplete data. Providers walk into visits without a clinical picture of what's already known about the patient.</p>
-        </div>
-      </div>
-      <blockquote class="problem-quote fade-in">
-        <p>"The gap between what's in a member's records and what's in their risk score is where plans lose accuracy, revenue, and member trust simultaneously."</p>
-      </blockquote>
-      <div class="stat-grid fade-in" role="list" aria-label="Key problem statistics">
-        <div class="stat-cell" role="listitem">
-          <div class="stat-num">$1,000+</div>
-          <div class="stat-desc">per member per year in revenue impact from a single missed HCC condition</div>
-        </div>
-        <div class="stat-cell" role="listitem">
-          <div class="stat-num">40%</div>
-          <div class="stat-desc">of coder time spent on manual record retrieval and condition extraction</div>
-        </div>
-        <div class="stat-cell" role="listitem">
-          <div class="stat-num">CMS RADV</div>
-          <div class="stat-desc">audit risk increases significantly when risk scores and clinical documentation don't align</div>
+          <h2>Four surfaces, one connected system</h2>
+          <p>Each screen corresponds to a distinct moment in the pipeline — from document upload to clinical encounter. The design decisions in each surface reflect who's using it, what they need to trust, and what action the system is asking them to take.</p>
         </div>
       </div>
     </div>
-  </section>
 
-  <section id="research" aria-labelledby="research-heading">
-    <div class="container">
-      <div class="section-header fade-in">
-        <div>
-          <div class="section-number" aria-hidden="true">02</div>
-          <h2 id="research-heading">Research</h2>
-        </div>
-        <div>
-          <h3>Primary and secondary</h3>
-          <p>For primary research, I would conduct structured interviews with medical coders and care managers in the risk adjustment workflow, observing their interactions with Enrollment+™ to surface friction points, cognitive load triggers, and workaround behaviours.</p>
-          <p>For secondary research, I reviewed CMS-HCC risk adjustment model documentation and OIG audit reports on risk adjustment data validation to understand the regulatory and financial stakes of coding inaccuracies. I also drew on AHIMA's clinical documentation improvement guidelines and UST Healthproof's published case studies on retrospective review outcomes.</p>
-        </div>
+    <div class="pipeline fade-in">
+      <div class="pipe-step">
+        <div class="pipe-icon">SCREEN 01</div>
+        <div class="pipe-label">AI interpretation card</div>
+        <div class="pipe-user">Coder · chart review queue</div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-icon">SCREEN 02</div>
+        <div class="pipe-label">Coder override interface</div>
+        <div class="pipe-user">Coder · condition correction</div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-icon">SCREEN 03</div>
+        <div class="pipe-label">Enrollment segmentation dashboard</div>
+        <div class="pipe-user">Enrollment analyst · plan assignment</div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-icon">SCREEN 04</div>
+        <div class="pipe-label">Provider pre-visit briefing</div>
+        <div class="pipe-user">Physician · EHR embedded panel</div>
       </div>
     </div>
-  </section>
 
-  <section id="users" aria-labelledby="users-heading">
-    <div class="container">
-      <div class="section-header fade-in">
-        <div>
-          <div class="section-number" aria-hidden="true">03</div>
-          <h2 id="users-heading">Users</h2>
+    <div class="container" style="padding:0;">
+
+      <div class="screen-block fade-in">
+        <div class="screen-label">
+          <span class="screen-tag tag-1">Screen 01</span>
+          <span class="screen-name">AI interpretation card — chart review queue</span>
         </div>
-        <div>
-          <h3>Three actors, one pipeline</h3>
-          <p>ClearChart serves three distinct roles across the payer and provider ecosystem. Each has a different relationship to the data, a different definition of success, and a different tolerance for complexity in the interface.</p>
+        <div class="screen-frame">
+          <div class="screen-frame-bar"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+          <img src="screen-01.png" alt="AI interpretation card showing three flagged conditions — Type 2 diabetes at 94% high confidence, CKD stage 3 rejected, and hypertensive heart disease at 61% needs review — each with evidence snippets and accept/reject actions" style="width:100%;display:block;background:var(--paper-3);min-height:280px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="screen-placeholder" style="display:none;">[ Screen 01 — drop export here ]</div>
         </div>
+        <p class="screen-caption">Each scanned document produces one card. Three conditions are flagged from a discharge summary: Type 2 diabetes mellitus at high confidence (94%), CKD stage 3 rejected with a reason ("not sufficient for coding"), and hypertensive heart disease at 61% needing review. Each flag shows the exact evidence snippet from the source text and an Accept / Reject / Add note action set. Coders can bulk-accept all high-confidence flags at the bottom without reviewing each individually.</p>
       </div>
-      <div class="user-grid fade-in" role="list" aria-label="User types">
-        <article class="user-card primary" role="listitem" aria-label="Primary user: Medical coder and risk adjustment analyst">
-          <div class="user-role">Primary · Payer-side</div>
-          <div class="user-name">Medical coder / risk adjustment analyst</div>
-          <p class="user-goal">Reviews AI-flagged conditions, accepts or corrects HCC codes, closes gaps for CMS submission. High volume, compliance-critical, needs speed and trust.</p>
-        </article>
-        <article class="user-card" role="listitem" aria-label="Secondary user: Enrollment ops analyst">
-          <div class="user-role">Secondary · Payer-side</div>
-          <div class="user-name">Enrollment ops analyst</div>
-          <p class="user-goal">Uses confirmed HCC data to assign risk tiers and match members to appropriate plans. Needs accurate segmentation, not raw clinical detail.</p>
-        </article>
-        <article class="user-card" role="listitem" aria-label="Tertiary user: Physician and care provider">
-          <div class="user-role">Tertiary · Provider-side</div>
-          <div class="user-name">Physician / care provider</div>
-          <p class="user-goal">Sees a pre-visit briefing with clinical context — conditions to confirm, open care gaps. Needs clinical framing, not billing language.</p>
-        </article>
+
+      <div class="screen-block fade-in">
+        <div class="screen-label">
+          <span class="screen-tag tag-2">Screen 02</span>
+          <span class="screen-name">Coder override interface — inline correction</span>
+        </div>
+        <div class="screen-frame">
+          <div class="screen-frame-bar"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+          <img src="screen-02.png" alt="Coder override interface showing an inline reason dropdown expanded with options: not documented, condition already coded, insufficient clinical evidence, incorrect code suggested, and other" style="width:100%;display:block;background:var(--paper-3);min-height:280px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="screen-placeholder" style="display:none;">[ Screen 02 — drop export here ]</div>
+        </div>
+        <p class="screen-caption">Override expands inline — no modal or navigation away from the queue. A required reason dropdown surfaces five options: not documented in this record, condition already coded, insufficient clinical evidence, incorrect code suggested, and other. Selecting "Incorrect code suggested" would reveal a code substitution field, feeding a correction signal back to the AI model. Friction is calibrated to the flag's confidence — high-confidence overrides require a reason; lower-confidence ones do not.</p>
+      </div>
+
+      <div class="screen-block fade-in">
+        <div class="screen-label">
+          <span class="screen-tag tag-3">Screen 03</span>
+          <span class="screen-name">Enrollment segmentation dashboard — shared view</span>
+        </div>
+        <div class="screen-frame">
+          <div class="screen-frame-bar"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+          <img src="screen-03.png" alt="Enrollment segmentation dashboard showing four KPI tiles, a filterable member table with risk tiers and HCC gap status, and an expanded profile drawer for Arjun Menon showing RAF score, confirmed HCC codes, and a plan match recommendation at 94% confidence" style="width:100%;display:block;background:var(--paper-3);min-height:280px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="screen-placeholder" style="display:none;">[ Screen 03 — drop export here ]</div>
+        </div>
+        <p class="screen-caption">Shared by risk adjustment and enrollment ops. Four KPI tiles surface the pipeline at a glance: 247 members pending segmentation, 84 high risk, 12 flagged for critical review, and a 91% HCC gap closure rate. Each member row shows risk tier, gap status, and plan match. Expanding a row (shown for Arjun Menon) reveals the RAF score bar, confirmed HCC codes, and a plan match recommendation with confidence score — all actionable with Confirm, Export, or Override.</p>
+      </div>
+
+      <div class="screen-block fade-in">
+        <div class="screen-label">
+          <span class="screen-tag tag-4">Screen 04</span>
+          <span class="screen-name">Provider pre-visit briefing — EHR embedded panel</span>
+        </div>
+        <div class="screen-frame">
+          <div class="screen-frame-bar"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+          <img src="screen-04.png" alt="EHR-embedded pre-visit briefing panel showing patient complexity badge, four conditions to confirm with Active/Uncertain/Resolved toggles, and two open care gaps including a high-priority HbA1c flag" style="width:100%;display:block;background:var(--paper-3);min-height:280px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="screen-placeholder" style="display:none;">[ Screen 04 — drop export here ]</div>
+        </div>
+        <p class="screen-caption">A sidebar panel embedded in the existing EHR alongside the patient chart. No ICD-10 codes visible — condition names only, keeping the frame clinical rather than billing-oriented. Four conditions are listed with Active / Uncertain / Resolved toggles for the provider to confirm currency at the visit. Below, two open care gaps are framed as clinical recommendations: a high-priority HbA1c flag and a nephrology referral. The CDI nudge appears last, after clinical context has established trust.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- DECISIONS -->
+<section id="decisions">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div>
+        <div class="section-number">05</div>
+        <h3>Design decisions</h3>
+      </div>
+      <div>
+        <h2>Choices worth explaining</h2>
+        <p>Five decisions shaped the system's character — each one a deliberate answer to a tension between competing design values.</p>
       </div>
     </div>
-  </section>
+    <ul class="decision-list fade-in">
+      <li>
+        <div class="decision-key">Confidence shown as label + percentage, never percentage alone</div>
+        <div class="decision-why">A coder reviewing 40 charts a day can't parse numbers under time pressure. Pairing "High · 94%" with a colour-coded pill lets them scan vertically and act without reading every value.</div>
+      </li>
+      <li>
+        <div class="decision-key">Evidence snippets are non-negotiable on every flagged condition</div>
+        <div class="decision-why">Without the source text, the AI is a black box. Showing the exact phrase that triggered each flag turns the system into a reference tool — the right power dynamic for certified coders who will not accept unjustified outputs.</div>
+      </li>
+      <li>
+        <div class="decision-key">Override friction is calibrated to AI confidence, not applied uniformly</div>
+        <div class="decision-why">A high-confidence override warrants a required reason — the disagreement is statistically significant. A needs-review override warrants optional friction — the system itself was already uncertain. Treating both the same would frustrate coders on flags that the AI didn't trust either.</div>
+      </li>
+      <li>
+        <div class="decision-key">Gap reasons map to organisational ownership, not just status</div>
+        <div class="decision-why">"Missing record" is a provider outreach problem. "Insufficient documentation" is a CDI problem. "Document quality failure" is an ops or IT problem. Naming reasons this way makes each gap immediately routable to the right team — not just visible on screen.</div>
+      </li>
+      <li>
+        <div class="decision-key">ICD-10 codes are hidden from providers entirely</div>
+        <div class="decision-why">The moment a provider sees coding language, the interaction reads as billing. Showing condition names only keeps the frame clinical — and the provider's attention on the patient, not the plan.</div>
+      </li>
+    </ul>
+  </div>
+</section>
 
-  <section id="screens" aria-labelledby="screens-heading">
-    <div class="container-wide">
-      <div class="container" style="padding:0;">
-        <div class="section-header fade-in">
-          <div>
-            <div class="section-number" aria-hidden="true">04</div>
-            <h2 id="screens-heading">Screens</h2>
-          </div>
-          <div>
-            <h3>Four surfaces, one connected system</h3>
-            <p>Each screen corresponds to a distinct moment in the pipeline — from document upload to clinical encounter. The design decisions in each surface reflect who's using it, what they need to trust, and what action the system is asking them to take.</p>
-          </div>
-        </div>
+<!-- IMPACT -->
+<section id="impact">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div>
+        <div class="section-number">06</div>
+        <h3>Hypothesised impact</h3>
       </div>
-
-      <div class="pipeline fade-in" role="list" aria-label="Screen pipeline overview">
-        <div class="pipe-step" role="listitem">
-          <div class="pipe-icon" aria-hidden="true">SCREEN 01</div>
-          <div class="pipe-label">AI interpretation card</div>
-          <div class="pipe-user">Coder · chart review queue</div>
-        </div>
-        <div class="pipe-step" role="listitem">
-          <div class="pipe-icon" aria-hidden="true">SCREEN 02</div>
-          <div class="pipe-label">Coder override interface</div>
-          <div class="pipe-user">Coder · condition correction</div>
-        </div>
-        <div class="pipe-step" role="listitem">
-          <div class="pipe-icon" aria-hidden="true">SCREEN 03</div>
-          <div class="pipe-label">Enrollment segmentation dashboard</div>
-          <div class="pipe-user">Enrollment analyst · plan assignment</div>
-        </div>
-        <div class="pipe-step" role="listitem">
-          <div class="pipe-icon" aria-hidden="true">SCREEN 04</div>
-          <div class="pipe-label">Provider pre-visit briefing</div>
-          <div class="pipe-user">Physician · EHR embedded panel</div>
-        </div>
-      </div>
-
-      <div class="container" style="padding:0;">
-
-        <div class="screen-block fade-in">
-          <div class="screen-label">
-            <span class="screen-tag tag-1" aria-label="Screen 1 of 4">Screen 01</span>
-            <span class="screen-name">AI interpretation card — chart review queue</span>
-          </div>
-          <div class="screen-frame">
-            <div class="screen-frame-bar" aria-hidden="true"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-            <img src="screen-01.png" alt="AI interpretation card showing three flagged conditions: Type 2 diabetes at 94% high confidence with an Accept action, CKD stage 3 marked as rejected with reason, and hypertensive heart disease at 61% needs review — each with evidence snippets from the source document" style="width:100%;display:block;background:var(--paper-3);min-height:280px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <div class="screen-placeholder" style="display:none;" aria-label="Screen 1 placeholder">[ Screen 01 — drop export here ]</div>
-          </div>
-          <p class="screen-caption">Each scanned document produces one card. Three conditions are flagged from a discharge summary: Type 2 diabetes mellitus at high confidence (94%), CKD stage 3 rejected with reason, and hypertensive heart disease at 61% needing review. Each flag shows the exact evidence snippet from the source text and an Accept / Reject / Add note action set. Coders can bulk-accept all high-confidence flags at the bottom.</p>
-        </div>
-
-        <div class="screen-block fade-in">
-          <div class="screen-label">
-            <span class="screen-tag tag-2" aria-label="Screen 2 of 4">Screen 02</span>
-            <span class="screen-name">Coder override interface — inline correction</span>
-          </div>
-          <div class="screen-frame">
-            <div class="screen-frame-bar" aria-hidden="true"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-            <img src="screen-02.png" alt="Coder override interface showing an inline reason dropdown expanded with five options: not documented in this record, condition already coded, insufficient clinical evidence, incorrect code suggested, and other" style="width:100%;display:block;background:var(--paper-3);min-height:280px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <div class="screen-placeholder" style="display:none;" aria-label="Screen 2 placeholder">[ Screen 02 — drop export here ]</div>
-          </div>
-          <p class="screen-caption">Override expands inline — no modal, no navigation away from the queue. A required reason dropdown surfaces five options. Selecting Incorrect code suggested reveals a code substitution field, feeding a correction signal back to the AI model. Friction is calibrated to the flag's confidence level.</p>
-        </div>
-
-        <div class="screen-block fade-in">
-          <div class="screen-label">
-            <span class="screen-tag tag-3" aria-label="Screen 3 of 4">Screen 03</span>
-            <span class="screen-name">Enrollment segmentation dashboard — shared view</span>
-          </div>
-          <div class="screen-frame">
-            <div class="screen-frame-bar" aria-hidden="true"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-            <img src="screen-03.png" alt="Enrollment segmentation dashboard showing four KPI tiles including 247 members pending segmentation and 91% HCC gap closure rate, a filterable member table with risk tiers, and an expanded profile drawer for Arjun Menon showing RAF score 2.41, confirmed HCC codes, and a plan match recommendation at 94% confidence" style="width:100%;display:block;background:var(--paper-3);min-height:280px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <div class="screen-placeholder" style="display:none;" aria-label="Screen 3 placeholder">[ Screen 03 — drop export here ]</div>
-          </div>
-          <p class="screen-caption">Shared by risk adjustment and enrollment ops. Four KPI tiles surface the pipeline at a glance. Each member row shows risk tier, gap status, and plan match. Expanding a row reveals the RAF score, confirmed HCC codes, and a plan match recommendation with confidence score — all actionable with Confirm, Export, or Override.</p>
-        </div>
-
-        <div class="screen-block fade-in">
-          <div class="screen-label">
-            <span class="screen-tag tag-4" aria-label="Screen 4 of 4">Screen 04</span>
-            <span class="screen-name">Provider pre-visit briefing — EHR embedded panel</span>
-          </div>
-          <div class="screen-frame">
-            <div class="screen-frame-bar" aria-hidden="true"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-            <img src="screen-04.png" alt="EHR-embedded pre-visit briefing panel showing a High complexity badge and RAF score 2.41, four conditions listed by name only with Active, Uncertain, and Resolved toggle buttons for each, and two open care gaps including a high-priority HbA1c flag and a nephrology referral recommendation" style="width:100%;display:block;background:var(--paper-3);min-height:280px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <div class="screen-placeholder" style="display:none;" aria-label="Screen 4 placeholder">[ Screen 04 — drop export here ]</div>
-          </div>
-          <p class="screen-caption">A sidebar panel embedded in the existing EHR. No ICD-10 codes visible — condition names only, keeping the frame clinical. Four conditions are listed with Active / Uncertain / Resolved toggles for the provider to confirm currency at the visit. Two open care gaps are framed as clinical recommendations, appearing after the clinical content has established trust.</p>
-        </div>
-
+      <div>
+        <h2>What success looks like</h2>
+        <p>As a concept project, impact is framed as a hypothesis grounded in industry benchmarks for retrospective chart review and HCC gap closure programmes.</p>
       </div>
     </div>
-  </section>
-
-  <section id="decisions" aria-labelledby="decisions-heading">
-    <div class="container">
-      <div class="section-header fade-in">
-        <div>
-          <div class="section-number" aria-hidden="true">05</div>
-          <h2 id="decisions-heading">Design decisions</h2>
-        </div>
-        <div>
-          <h3>Choices worth explaining</h3>
-          <p>Five decisions shaped the system's character — each one a deliberate answer to a tension between competing design values.</p>
-        </div>
+    <div class="impact-grid fade-in">
+      <div class="impact-card">
+        <div class="impact-metric">30–40%</div>
+        <div class="impact-label">Estimated reduction in chart review time per coder, driven by AI pre-extraction and bulk acceptance of high-confidence conditions</div>
       </div>
-      <ul class="decision-list fade-in" aria-label="Key design decisions">
-        <li>
-          <div class="decision-key">Confidence shown as label and percentage, never percentage alone</div>
-          <div class="decision-why">A coder reviewing 40 charts a day can't parse numbers under time pressure. Pairing "High · 94%" with a colour-coded pill lets them scan vertically and act without reading every value.</div>
-        </li>
-        <li>
-          <div class="decision-key">Evidence snippets are non-negotiable on every flagged condition</div>
-          <div class="decision-why">Without the source text, the AI is a black box. Showing the exact phrase that triggered each flag turns the system into a reference tool — the right power dynamic for certified coders who will not accept unjustified outputs.</div>
-        </li>
-        <li>
-          <div class="decision-key">Override friction is calibrated to AI confidence, not applied uniformly</div>
-          <div class="decision-why">A high-confidence override warrants a required reason — the disagreement is statistically significant. A needs-review override warrants optional friction. Treating both the same would frustrate coders on flags the AI didn't trust either.</div>
-        </li>
-        <li>
-          <div class="decision-key">Gap reasons map to organisational ownership, not just status</div>
-          <div class="decision-why">"Missing record" is a provider outreach problem. "Insufficient documentation" is a CDI problem. "Document quality failure" is an ops or IT problem. Naming reasons this way makes each gap immediately routable to the right team.</div>
-        </li>
-        <li>
-          <div class="decision-key">ICD-10 codes are hidden from providers entirely</div>
-          <div class="decision-why">The moment a provider sees coding language, the interaction reads as billing. Showing condition names only keeps the frame clinical — and the provider's attention on the patient, not the plan.</div>
-        </li>
-      </ul>
-    </div>
-  </section>
-
-  <section id="impact" aria-labelledby="impact-heading">
-    <div class="container">
-      <div class="section-header fade-in">
-        <div>
-          <div class="section-number" aria-hidden="true">06</div>
-          <h2 id="impact-heading">Hypothesised impact</h2>
-        </div>
-        <div>
-          <h3>What success looks like</h3>
-          <p>As a concept project, impact is framed as a hypothesis grounded in industry benchmarks for retrospective chart review and HCC gap closure programmes.</p>
-        </div>
+      <div class="impact-card">
+        <div class="impact-metric">↑ HCC accuracy</div>
+        <div class="impact-label">Fewer missed conditions in CMS submission, reducing retrospective audit exposure and retroactive payment adjustments</div>
       </div>
-      <div class="impact-grid fade-in" role="list" aria-label="Hypothesised impact metrics">
-        <div class="impact-card" role="listitem">
-          <div class="impact-metric">30–40%</div>
-          <div class="impact-label">Estimated reduction in chart review time per coder, driven by AI pre-extraction and bulk acceptance of high-confidence conditions</div>
-        </div>
-        <div class="impact-card" role="listitem">
-          <div class="impact-metric" aria-label="Improved HCC accuracy">↑ HCC accuracy</div>
-          <div class="impact-label">Fewer missed conditions in CMS submission, reducing retrospective audit exposure and retroactive payment adjustments</div>
-        </div>
-        <div class="impact-card" role="listitem">
-          <div class="impact-metric">Faster enrollment</div>
-          <div class="impact-label">Risk-stratified member segmentation based on complete HCC data enables confident plan placement decisions earlier in the enrollment cycle</div>
-        </div>
-        <div class="impact-card" role="listitem">
-          <div class="impact-metric">CDI loop closed</div>
-          <div class="impact-label">Provider pre-visit briefing surfaces documentation gaps before the encounter — shifting CDI from retrospective correction to prospective prevention</div>
-        </div>
+      <div class="impact-card">
+        <div class="impact-metric">Faster enrollment</div>
+        <div class="impact-label">Risk-stratified member segmentation based on complete HCC data enables confident plan placement decisions earlier in the enrollment cycle</div>
+      </div>
+      <div class="impact-card">
+        <div class="impact-metric">CDI loop closed</div>
+        <div class="impact-label">Provider pre-visit briefing surfaces documentation gaps before the encounter — shifting CDI from retrospective correction to prospective prevention</div>
       </div>
     </div>
-  </section>
-</main>
+  </div>
+</section>
 
 <div class="container">
-  <footer role="contentinfo">
-    <span class="footer-note">ClearChart · Speculative concept · UST Healthproof · Sharika · 2026</span>
-    <a class="footer-link" href="mailto:sharikabenny@gmail.com" aria-label="Email Sharika at sharikabenny@gmail.com">Email me →</a>
+  <footer class="fade-in">
+    <span class="footer-note">Speculative concept · UST Healthproof · Sharika Benny · 2026</span>
+    <a class="footer-link" href="mailto:sharikabenny@gmail.com">Email me →</a>
   </footer>
 </div>
 
 <script>
-  const root = document.documentElement;
-  const toggle = document.getElementById('themeToggle');
-  const icon = document.getElementById('toggleIcon');
-  const label = document.getElementById('toggleLabel');
-  const saved = localStorage.getItem('theme') || 'light';
-  applyTheme(saved);
-  toggle.addEventListener('click', () => {
-    const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-    applyTheme(next); localStorage.setItem('theme', next);
-  });
-  function applyTheme(theme) {
-    root.setAttribute('data-theme', theme);
-    icon.textContent = theme === 'dark' ? '☀️' : '🌙';
-    label.textContent = theme === 'dark' ? 'Light' : 'Dark';
-    toggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
-  }
-
-  const s = document.createElement('style');
-  s.textContent = `
-    @media(max-width:640px) {
-      .nav-links { display:none; }
-      .screen-frame img { max-height:240px; object-fit:cover; object-position:top; }
-      .decision-list li { grid-template-columns:1fr; gap:0.5rem; }
-      .impact-grid { grid-template-columns:1fr; }
-      .user-grid { grid-template-columns:1fr; }
-      .stat-grid { grid-template-columns:1fr; }
-    }
-    .screen-frame img { cursor:zoom-in; }
-    .lb { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.93); z-index:9999; align-items:center; justify-content:center; cursor:zoom-out; }
-    .lb.open { display:flex; }
-    .lb img { max-width:92vw; max-height:92vh; border-radius:8px; touch-action:pinch-zoom; cursor:default; object-fit:contain; }
-    .lb-close { position:fixed; top:1rem; right:1rem; background:rgba(255,255,255,0.12); border:none; color:#fff; font-size:1.25rem; width:38px; height:38px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; }
-    .lb-close:hover { background:rgba(255,255,255,0.25); }
-    .lb-close:focus-visible { outline:2px solid #fff; outline-offset:3px; }
-    .lb-caption { position:fixed; bottom:1.5rem; left:50%; transform:translateX(-50%); color:rgba(255,255,255,0.6); font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.05em; white-space:nowrap; }
-  `;
-  document.head.appendChild(s);
-
-  const lb = document.createElement('div');
-  lb.className = 'lb'; lb.id = 'lb';
-  lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true'); lb.setAttribute('aria-label', 'Image viewer');
-  lb.innerHTML = `<button class="lb-close" id="lbClose" aria-label="Close image viewer">✕</button><img id="lbImg" src="" alt=""><p class="lb-caption">Tap outside or press Esc to close · Pinch to zoom</p>`;
-  document.body.appendChild(lb);
-
-  const lbEl = document.getElementById('lb');
-  const lbImg = document.getElementById('lbImg');
-
-  document.querySelectorAll('.screen-frame img').forEach(img => {
-    img.setAttribute('tabindex', '0');
-    img.setAttribute('role', 'button');
-    img.setAttribute('aria-label', `View full size: ${img.alt}`);
-    const open = () => { lbImg.src = img.src; lbImg.alt = img.alt; lbEl.classList.add('open'); document.body.style.overflow = 'hidden'; };
-    img.addEventListener('click', open);
-    img.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') open(); });
-  });
-
-  const closeLb = () => { lbEl.classList.remove('open'); document.body.style.overflow = ''; };
-  lbEl.addEventListener('click', e => { if (e.target !== lbImg) closeLb(); });
-  document.getElementById('lbClose').addEventListener('click', closeLb);
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
-
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
 </script>
 </body>
 </html>
