@@ -130,7 +130,7 @@
 <body>
 
 <nav>
-  <a class="nav-logo" href="index.html" style="text-decoration:none;">← Sharika</a>
+  <a class="nav-logo" href="index.html" style="text-decoration:none;">← Sharika Benny</a>
   <ul class="nav-links">
     <li><a href="#problem">Problem</a></li>
     <li><a href="#research">Research</a></li>
@@ -145,8 +145,8 @@
   <div class="container">
     <div class="hero-eyebrow">Portfolio case study · UST Healthproof</div>
     <h1 class="hero-title">Designing for the gap between <em>diagnosis</em> and coverage</h1>
-    <p class="hero-sub">A concept feature for UST Healthproof's risk adjustment ecosystem — turning unstructured medical records into actionable diagnostic signals across four connected workflows.</p>
-    <p class="hero-disclaimer">Conceptual / speculative project for portfolio purposes.</p>
+    <p class="hero-sub">A systems-level concept for UST HealthProof’s risk adjustment ecosystem — using AI to turn unstructured medical records into actionable signals across four connected workflows.</p>
+    <p class="hero-disclaimer">Conceptual/speculative project for portfolio purposes.</p>
     <div class="hero-meta">
       <div class="meta-item"><span class="meta-label">Role</span><span class="meta-val">Product designer</span></div>
       <div class="meta-item"><span class="meta-label">Type</span><span class="meta-val">Concept / speculative</span></div>
@@ -165,28 +165,28 @@
         <h3>The problem</h3>
       </div>
       <div>
-        <h2>Unstructured records create gaps the plan can't close</h2>
-        <p>Health plans using UST Healthproof's risk adjustment platform face a persistent problem: medical records arrive as PDFs, scanned documents, and handwritten notes — unstructured, inconsistent, and time-consuming to review manually. When chronic conditions go undocumented or uncoded, HCC risk scores are incomplete. Incomplete risk scores lead to plan mismatch, CMS audit exposure, and members enrolled in the wrong coverage.</p>
-        <p>The problem compounds across the care pipeline. Coders miss conditions buried in chart notes. Enrollment analysts make tier decisions on incomplete data. Providers walk into visits without a clinical picture of what's already known about the patient.</p>
+        <h2>Unstructured records create gaps that the plan can't close</h2>
+        <p>Health plans operating in risk adjustment ecosystems like UST HealthProof’s often face a persistent challenge: records arrive as PDFs, scanned documents, and handwritten notes—making diagnosis capture slow and inconsistent. When chronic conditions are missed or uncoded, HCC scores may be incomplete, increasing audit risk and plan mismatch.</p>
+        <p>The issue cascades across the care pipeline: coders can miss conditions hidden in chart notes, enrollment analysts may make tier decisions on incomplete data, and providers may start visits without a clear view of the patient’s known conditions.</p>
       </div>
     </div>
 
     <div class="problem-quote fade-in">
-      <p>"The gap between what's in a member's records and what's in their risk score is where plans lose accuracy, revenue, and member trust simultaneously."</p>
+      <p>When a member’s documented conditions are not reflected in their risk score, plans can lose accuracy, revenue, and member trust.</p>
     </div>
 
     <div class="stat-grid fade-in">
       <div class="stat-cell">
-        <div class="stat-num">$1,000+</div>
-        <div class="stat-desc">per member per year in revenue impact from a single missed HCC condition</div>
+        <div class="stat-num">Revenue at risk</div>
+        <div class="stat-desc">a single missed HCC condition can materially reduce annual reimbursement</div>
       </div>
       <div class="stat-cell">
-        <div class="stat-num">40%</div>
-        <div class="stat-desc">of coder time spent on manual record retrieval and condition extraction</div>
+        <div class="stat-num">Hidden cost</div>
+        <div class="stat-desc">manual chart retrieval and diagnosis extraction remain major productivity drains in coding workflows.</div>
       </div>
       <div class="stat-cell">
         <div class="stat-num">CMS RADV</div>
-        <div class="stat-desc">audit risk increases significantly when risk scores and clinical documentation don't align</div>
+        <div class="stat-desc">audit exposure increases when submitted risk scores are not supported by clinical documentation.</div>
       </div>
     </div>
   </div>
@@ -203,7 +203,7 @@
       <div>
         <h2>Primary and secondary</h2>
         <p>For primary research, I would conduct structured interviews with medical coders and care managers in the risk adjustment workflow, observing their interactions with Enrollment+™ to surface friction points, cognitive load triggers, and workaround behaviours. Findings would be mapped to a journey anchored to the chart review and HCC gap closure process.</p>
-        <p>For secondary research, I reviewed CMS-HCC risk adjustment model documentation and OIG audit reports on risk adjustment data validation to understand the regulatory and financial stakes of coding inaccuracies. I drew on AHIMA's clinical documentation improvement guidelines and UST Healthproof's published case studies on retrospective review outcomes to understand how coding gaps propagate into plan pricing and member segmentation decisions within a BPaaS model.</p>
+        <p>For secondary research, I reviewed CMS-HCC risk adjustment model documentation and OIG audit reports on risk adjustment data validation to understand the regulatory and financial stakes of coding inaccuracies.</p>
       </div>
     </div>
   </div>
@@ -219,14 +219,14 @@
       </div>
       <div>
         <h2>Three actors, one pipeline</h2>
-        <p>ClearChart serves three distinct roles across the payer and provider ecosystem. Each has a different relationship to the data, a different definition of success, and a different tolerance for complexity in the interface.</p>
+        <p>The product concept serves three distinct roles across the payer and provider ecosystem. Each has a different relationship to the data, a different definition of success, and a different tolerance for interface complexity.</p>
       </div>
     </div>
     <div class="user-grid fade-in">
       <div class="user-card primary">
         <div class="user-role">Primary · Payer-side</div>
         <div class="user-name">Medical coder / risk adjustment analyst</div>
-        <div class="user-goal">Reviews AI-flagged conditions, accepts or corrects HCC codes, closes gaps for CMS submission. High volume, compliance-critical, needs speed and trust.</div>
+        <div class="user-goal">Reviews AI-flagged conditions, accepts or corrects HCC codes, and closes gaps for CMS submission. High volume, compliance-critical, needs speed and trust.</div>
       </div>
       <div class="user-card">
         <div class="user-role">Secondary · Payer-side</div>
@@ -306,7 +306,7 @@
           <img src="screen-02.png" alt="Coder override interface showing an inline reason dropdown expanded with options: not documented, condition already coded, insufficient clinical evidence, incorrect code suggested, and other" style="width:100%;display:block;background:var(--paper-3);min-height:280px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="screen-placeholder" style="display:none;">[ Screen 02 — drop export here ]</div>
         </div>
-        <p class="screen-caption">Override expands inline — no modal, no navigation away from the queue. A required reason dropdown surfaces five options: not documented in this record, condition already coded, insufficient clinical evidence, incorrect code suggested, and other. Selecting "Incorrect code suggested" would reveal a code substitution field, feeding a correction signal back to the AI model. Friction is calibrated to the flag's confidence — high-confidence overrides require a reason; lower-confidence ones do not.</p>
+        <p class="screen-caption">Override expands inline — no modal or navigation away from the queue. A required reason dropdown surfaces five options: not documented in this record, condition already coded, insufficient clinical evidence, incorrect code suggested, and other. Selecting "Incorrect code suggested" would reveal a code substitution field, feeding a correction signal back to the AI model. Friction is calibrated to the flag's confidence — high-confidence overrides require a reason; lower-confidence ones do not.</p>
       </div>
 
       <div class="screen-block fade-in">
@@ -363,7 +363,7 @@
       </li>
       <li>
         <div class="decision-key">Override friction is calibrated to AI confidence, not applied uniformly</div>
-        <div class="decision-why">A high-confidence override warrants a required reason — the disagreement is statistically significant. A needs-review override warrants optional friction — the system itself was already uncertain. Treating both the same would frustrate coders on flags the AI didn't trust either.</div>
+        <div class="decision-why">A high-confidence override warrants a required reason — the disagreement is statistically significant. A needs-review override warrants optional friction — the system itself was already uncertain. Treating both the same would frustrate coders on flags that the AI didn't trust either.</div>
       </li>
       <li>
         <div class="decision-key">Gap reasons map to organisational ownership, not just status</div>
@@ -413,7 +413,7 @@
 
 <div class="container">
   <footer class="fade-in">
-    <span class="footer-note">ClearChart · Speculative concept · UST Healthproof · Sharika · 2026</span>
+    <span class="footer-note">Speculative concept · UST Healthproof · Sharika Benny · 2026</span>
     <a class="footer-link" href="mailto:sharikabenny@gmail.com">Email me →</a>
   </footer>
 </div>
