@@ -1,14 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script>
-    (function () {
-      const saved = localStorage.getItem('theme') || 'light';
-      document.documentElement.setAttribute('data-theme', saved);
-    })();
-  </script>
-
-  <link rel="stylesheet" href="styles.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ClearChart — Sharika</title>
@@ -139,7 +131,10 @@
     .pipe-step:last-child { border-bottom: none; }
     .stat-grid { grid-template-columns: 1fr; }
   }
-</style>
+  </style>
+    <script>
+    document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');
+  </script>
 </head>
 <body>
 
