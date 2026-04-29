@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,18 +7,57 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
   <style>
-  :root {
-    --ink: #0F0E0D; --ink-2: #3D3B38; --ink-3: #2E2C2A; --ink-4: #4A4845;
-    --paper: #F5F2EE; --paper-2: #EDE9E3; --paper-3: #E2DDD6;
-    --accent: #1B4332; --accent-light: #D8F3DC; --accent-mid: #52B788;
-    --warn: #7B3F00; --warn-light: #FDEBD0;
-    --info: #1A3A5C; --info-light: #D6E8FA;
-    --danger: #6B1C1C; --danger-light: #FDDEDE;
-    --rule: rgba(15,14,13,0.1);
-    --font-display: 'DM Serif Display', Georgia, serif;
-    --font-body: 'DM Sans', sans-serif;
-    --font-mono: 'DM Mono', monospace;
-  }
+:root[data-theme="light"] {
+  --ink: #0F0E0D;
+  --ink-2: #3D3B38;
+  --ink-3: #2E2C2A;
+  --ink-4: #4A4845;
+
+  --paper: #F5F2EE;
+  --paper-2: #EDE9E3;
+  --paper-3: #E2DDD6;
+
+  --accent: #1B4332;
+  --accent-light: #D8F3DC;
+  --accent-mid: #52B788;
+
+  --warn: #7B3F00;
+  --warn-light: #FDEBD0;
+
+  --info: #1A3A5C;
+  --info-light: #D6E8FA;
+
+  --danger: #6B1C1C;
+  --danger-light: #FDDEDE;
+
+  --rule: rgba(15,14,13,0.1);
+}
+
+:root[data-theme="dark"] {
+  --ink: #F0EDE8;
+  --ink-2: #C9C4BC;
+  --ink-3: #A8A39B;
+  --ink-4: #7A7670;
+
+  --paper: #1A1917;
+  --paper-2: #232220;
+  --paper-3: #2C2A28;
+
+  --accent: #52B788;
+  --accent-light: #1B3A2A;
+  --accent-mid: #52B788;
+
+  --warn: #D9A066;
+  --warn-light: #3A2B1A;
+
+  --info: #90C4F0;
+  --info-light: #1A2B3A;
+
+  --danger: #F2A7A7;
+  --danger-light: #3A1E1E;
+
+  --rule: rgba(240,237,232,0.08);
+}
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
    body { background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.7; font-weight: 300; transition: background 0.3s ease, color 0.3s ease; }
