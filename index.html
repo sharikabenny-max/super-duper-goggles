@@ -122,7 +122,10 @@
     .stat-grid { grid-template-columns: 1fr; }
     .nav-links { display: none; }
   }
-</style>
+  </style>
+  <script>
+    document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');
+  </script>
 </head>
 <body>
 
