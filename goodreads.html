@@ -1,14 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <script>
-    (function () {
-      const saved = localStorage.getItem('theme') || 'light';
-      document.documentElement.setAttribute('data-theme', saved);
-    })();
-  </script>
-
-  <link rel="stylesheet" href="styles.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Goodreads Redesign — Sharika</title>
@@ -126,7 +118,10 @@
     .pipe-step { border-right: none; border-bottom: 1px solid var(--rule); }
     .pipe-step:last-child { border-bottom: none; }
   }
-</style>
+  </style>
+    <script>
+    document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');
+  </script>
 </head>
 <body>
 
