@@ -321,70 +321,39 @@
 </div>
 
 <script>
-  const root = document.documentElement;
-  const toggle = document.getElementById('themeToggle');
-  const icon = document.getElementById('toggleIcon');
-  const label = document.getElementById('toggleLabel');
-  const saved = localStorage.getItem('theme') || 'light';
-  applyTheme(saved);
-  toggle.addEventListener('click', () => {
-    const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-    applyTheme(next); localStorage.setItem('theme', next);
-  });
-  function applyTheme(theme) {
-    root.setAttribute('data-theme', theme);
-    icon.textContent = theme === 'dark' ? '☀️' : '🌙';
-    label.textContent = theme === 'dark' ? 'Light' : 'Dark';
-    toggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+const root = document.documentElement;
+const toggle = document.getElementById('themeToggle');
+const icon = document.getElementById('toggleIcon');
+const label = document.getElementById('toggleLabel');
+
+const saved = localStorage.getItem('theme') || 'light';
+applyTheme(saved);
+
+toggle.addEventListener('click', () => {
+  const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+  applyTheme(next);
+  localStorage.setItem('theme', next);
+});
+
+function applyTheme(theme) {
+  root.setAttribute('data-theme', theme);
+
+  if (theme === 'dark') {
+    icon.textContent = '☀️';
+    label.textContent = 'Light';
+  } else {
+    icon.textContent = '🌙';
+    label.textContent = 'Dark';
   }
+}
 
-  const s = document.createElement('style');
-  s.textContent = `
-    @media(max-width:640px) {
-      .nav-links { display:none; }
-      .screen-frame img { max-height:240px; object-fit:cover; object-position:top; }
-      .solution-list li { grid-template-columns:1fr; gap:0.5rem; }
-      .impact-grid { grid-template-columns:1fr; }
-      .friction-grid { grid-template-columns:1fr; }
-    }
-    .screen-frame img { cursor:zoom-in; }
-    .lb { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.93); z-index:9999; align-items:center; justify-content:center; cursor:zoom-out; }
-    .lb.open { display:flex; }
-    .lb img { max-width:92vw; max-height:92vh; border-radius:8px; touch-action:pinch-zoom; cursor:default; object-fit:contain; }
-    .lb-close { position:fixed; top:1rem; right:1rem; background:rgba(255,255,255,0.12); border:none; color:#fff; font-size:1.25rem; width:38px; height:38px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; }
-    .lb-close:hover { background:rgba(255,255,255,0.25); }
-    .lb-close:focus-visible { outline:2px solid #fff; outline-offset:3px; }
-    .lb-caption { position:fixed; bottom:1.5rem; left:50%; transform:translateX(-50%); color:rgba(255,255,255,0.6); font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.05em; white-space:nowrap; }
-  `;
-  document.head.appendChild(s);
-
-  const lb = document.createElement('div');
-  lb.className = 'lb'; lb.id = 'lb';
-  lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true'); lb.setAttribute('aria-label', 'Image viewer');
-  lb.innerHTML = `<button class="lb-close" id="lbClose" aria-label="Close image viewer">✕</button><img id="lbImg" src="" alt=""><p class="lb-caption">Tap outside or press Esc to close · Pinch to zoom</p>`;
-  document.body.appendChild(lb);
-
-  const lbEl = document.getElementById('lb');
-  const lbImg = document.getElementById('lbImg');
-
-  document.querySelectorAll('.screen-frame img').forEach(img => {
-    img.setAttribute('tabindex', '0');
-    img.setAttribute('role', 'button');
-    img.setAttribute('aria-label', `View full size: ${img.alt}`);
-    const open = () => { lbImg.src = img.src; lbImg.alt = img.alt; lbEl.classList.add('open'); document.body.style.overflow = 'hidden'; };
-    img.addEventListener('click', open);
-    img.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') open(); });
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
   });
+}, { threshold: 0.08 });
 
-  const closeLb = () => { lbEl.classList.remove('open'); document.body.style.overflow = ''; };
-  lbEl.addEventListener('click', e => { if (e.target !== lbImg) closeLb(); });
-  document.getElementById('lbClose').addEventListener('click', closeLb);
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
-
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
 </script>
 </body>
 </html>
