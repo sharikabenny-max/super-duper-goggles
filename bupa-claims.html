@@ -1,14 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <script>
-    (function () {
-      const saved = localStorage.getItem('theme') || 'light';
-      document.documentElement.setAttribute('data-theme', saved);
-    })();
-  </script>
-
-  <link rel="stylesheet" href="styles.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Healthcare Claims Redesign — Sharika</title>
@@ -119,7 +111,10 @@
     .section-header, .solution-list li, .impact-grid { grid-template-columns: 1fr; gap: 1rem; }
     .friction-grid { grid-template-columns: 1fr; }
   }
-</style>
+  </style>
+    <script>
+    document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');
+  </script>
 </head>
 <body>
 
