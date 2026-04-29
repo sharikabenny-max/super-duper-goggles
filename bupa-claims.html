@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Healthcare Claims — Sharika</title>
+<title>Healthcare Claims Redesign — Sharika</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink: #0F0E0D; --ink-2: #3D3B38; --ink-3: #7A7670; --ink-4: #B8B4AD;
+    --ink: #0F0E0D; --ink-2: #3D3B38; --ink-3: #2E2C2A; --ink-4: #4A4845;
     --paper: #F5F2EE; --paper-2: #EDE9E3; --paper-3: #E2DDD6;
     --accent: #1B4332; --accent-light: #D8F3DC; --accent-mid: #52B788;
     --info: #1A3A5C; --info-light: #D6E8FA;
@@ -20,24 +20,27 @@
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body { background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.7; font-weight: 300; }
+  body { background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.7; font-weight: 300; transition: background 0.3s ease, color 0.3s ease; }
+  .theme-toggle { background: var(--paper-3); border: 1px solid var(--rule); border-radius: 20px; padding: 4px 10px; cursor: pointer; display: flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 10px; color: var(--ink-3); letter-spacing: 0.04em; transition: background 0.2s; }
+  .theme-toggle:hover { background: var(--paper-2); }
+  .theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 20px; }
 
-  nav {
-    position: sticky; top: 0; z-index: 100; background: var(--paper);
-    border-bottom: 1px solid var(--rule); padding: 0 2rem;
-    display: flex; align-items: center; justify-content: space-between; height: 56px;
-  }
-  .nav-logo { font-family: var(--font-mono); font-size: 13px; font-weight: 500; color: var(--ink); letter-spacing: 0.04em; cursor: pointer; }
+  .skip-link { position: absolute; top: -100%; left: 1rem; background: var(--accent); color: #fff; padding: 8px 16px; border-radius: 4px; font-family: var(--font-mono); font-size: 12px; text-decoration: none; z-index: 200; }
+  .skip-link:focus { top: 1rem; }
+
+  nav { position: sticky; top: 0; z-index: 100; background: var(--paper); border-bottom: 1px solid var(--rule); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+  .nav-logo { font-family: var(--font-mono); font-size: 13px; font-weight: 500; color: var(--ink); letter-spacing: 0.04em; text-decoration: none; }
+  .nav-logo:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
   .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a { font-size: 12px; color: var(--ink-3); text-decoration: none; letter-spacing: 0.03em; cursor: pointer; transition: color 0.15s; }
+  .nav-links a { font-size: 12px; color: var(--ink-3); text-decoration: none; letter-spacing: 0.03em; transition: color 0.15s; }
   .nav-links a:hover { color: var(--ink); }
+  .nav-links a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
 
   .container { max-width: 780px; margin: 0 auto; padding: 0 2rem; }
   .container-wide { max-width: 1040px; margin: 0 auto; padding: 0 2rem; }
   section { padding: 5rem 0; border-bottom: 1px solid var(--rule); }
   section:last-child { border-bottom: none; }
 
-  /* HERO */
   .hero { padding: 7rem 0 5rem; border-bottom: 1px solid var(--rule); }
   .hero-eyebrow { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--ink-3); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px; }
   .hero-eyebrow::before { content: ''; display: block; width: 24px; height: 1px; background: var(--ink-4); }
@@ -50,7 +53,6 @@
   .meta-label { font-family: var(--font-mono); font-size: 10px; color: var(--ink-4); letter-spacing: 0.08em; text-transform: uppercase; }
   .meta-val { font-size: 13px; font-weight: 500; color: var(--ink-2); }
 
-  /* TYPOGRAPHY */
   h2 { font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2.1rem); font-weight: 400; line-height: 1.2; color: var(--ink); margin-bottom: 1.25rem; }
   h3 { font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--ink-3); letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 1rem; }
   p { color: var(--ink-2); margin-bottom: 1rem; font-weight: 300; }
@@ -58,25 +60,21 @@
   .section-header { display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start; margin-bottom: 3rem; }
   .section-number { font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); letter-spacing: 0.06em; margin-bottom: 0.5rem; }
 
-  /* TAGS */
   .tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 2rem; }
   .tag-pill { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; padding: 4px 12px; border-radius: 20px; }
   .tag-green { background: var(--accent-light); color: var(--accent); }
   .tag-blue { background: var(--info-light); color: var(--info); }
 
-  /* PROBLEM QUOTE */
   .problem-quote { border-left: 2px solid var(--accent); padding: 1.25rem 1.5rem; background: var(--paper-2); border-radius: 0 8px 8px 0; margin: 2rem 0; }
   .problem-quote p { font-family: var(--font-display); font-size: 1.1rem; font-style: italic; color: var(--ink); line-height: 1.5; margin: 0; }
   .problem-quote cite { display: block; font-family: var(--font-mono); font-size: 10px; color: var(--ink-4); letter-spacing: 0.06em; margin-top: 0.5rem; font-style: normal; }
 
-  /* FRICTION LIST */
   .friction-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; margin: 2rem 0; }
   .friction-cell { background: var(--paper); padding: 1.5rem; }
   .friction-icon { font-family: var(--font-mono); font-size: 10px; color: var(--ink-4); letter-spacing: 0.06em; margin-bottom: 0.5rem; }
   .friction-label { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
   .friction-sub { font-size: 12px; color: var(--ink-3); line-height: 1.5; }
 
-  /* SCREEN */
   .screen-block { margin: 3rem 0; }
   .screen-label { display: flex; align-items: center; gap: 12px; margin-bottom: 1rem; }
   .screen-tag { font-family: var(--font-mono); font-size: 10px; font-weight: 500; padding: 3px 10px; border-radius: 20px; letter-spacing: 0.06em; text-transform: uppercase; }
@@ -89,23 +87,22 @@
   .screen-placeholder { min-height: 280px; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 10px; color: var(--ink-4); letter-spacing: 0.06em; }
   .screen-caption { font-size: 13px; color: var(--ink-3); margin-top: 1rem; font-style: italic; }
 
-  /* SOLUTION LIST */
   .solution-list { list-style: none; margin: 1.5rem 0; }
   .solution-list li { padding: 1rem 0; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 2fr 3fr; gap: 2rem; }
   .solution-list li:last-child { border-bottom: none; }
   .solution-key { font-size: 13px; font-weight: 500; color: var(--ink); line-height: 1.4; }
   .solution-why { font-size: 13px; color: var(--ink-3); line-height: 1.5; }
 
-  /* IMPACT */
   .impact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 2rem 0; }
   .impact-card { background: var(--paper-2); border: 1px solid var(--rule); border-radius: 10px; padding: 1.25rem; }
   .impact-metric { font-family: var(--font-display); font-size: 1.6rem; color: var(--accent); margin-bottom: 0.3rem; }
   .impact-label { font-size: 12px; color: var(--ink-3); line-height: 1.4; }
 
-  /* FOOTER */
   footer { padding: 3rem 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
   .footer-note { font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); letter-spacing: 0.04em; }
-  .footer-link { font-family: var(--font-mono); font-size: 11px; color: var(--accent); letter-spacing: 0.04em; text-decoration: none; cursor: pointer; }
+  .footer-link { font-family: var(--font-mono); font-size: 11px; color: var(--accent); letter-spacing: 0.04em; text-decoration: none; }
+  .footer-link:hover { text-decoration: underline; }
+  .footer-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
 
   .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
   .fade-in.visible { opacity: 1; transform: none; }
@@ -118,204 +115,262 @@
 </head>
 <body>
 
-<nav>
-  <a class="nav-logo" href="index.html" style="text-decoration:none;">← Sharika</a>
-  <ul class="nav-links">
-    <li><a href="#problem">Problem</a></li>
-    <li><a href="#screens">Screens</a></li>
-    <li><a href="#solution">Solution</a></li>
-    <li><a href="#impact">Impact</a></li>
-  </ul>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<nav aria-label="Main navigation">
+  <a class="nav-logo" href="index.html" aria-label="Back to Sharika's portfolio">← Sharika</a>
+  <div style="display:flex;align-items:center;gap:2rem;">
+    <ul class="nav-links" role="list">
+      <li><a href="#problem" aria-label="Jump to problem section">Problem</a></li>
+      <li><a href="#screens" aria-label="Jump to screens section">Screens</a></li>
+      <li><a href="#solution" aria-label="Jump to solution section">Solution</a></li>
+      <li><a href="#impact" aria-label="Jump to impact section">Impact</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Switch to dark mode"><span id="toggleIcon">🌙</span><span id="toggleLabel">Dark</span></button>
+  </div>
 </nav>
 
-<div class="hero">
-  <div class="container">
-    <div class="hero-eyebrow">Client project · Infosys</div>
-    <h1 class="hero-title">Redesigning healthcare claims for a <em>mobile-first world</em></h1>
-    <p class="hero-sub">Submitting a healthcare claim on mobile should be straightforward. For members of a global health insurance provider, it wasn't — because the experience had been adapted from web without ever being rethought for the hand that holds the phone.</p>
-    <p class="hero-disclaimer">Client project completed at Infosys. Client name withheld. Screens shown are member-facing UI. Proprietary data and internal workflows have been omitted.</p>
-    <div class="hero-meta">
-      <div class="meta-item"><span class="meta-label">Role</span><span class="meta-val">Product designer</span></div>
-      <div class="meta-item"><span class="meta-label">Client</span><span class="meta-val">Global health insurer · via Infosys</span></div>
-      <div class="meta-item"><span class="meta-label">Type</span><span class="meta-val">End-to-end design</span></div>
-      <div class="meta-item"><span class="meta-label">Domain</span><span class="meta-val">Healthcare · Mobile</span></div>
+<main id="main-content">
+  <div class="hero">
+    <div class="container">
+      <p class="hero-eyebrow" aria-label="Client project at Infosys">Client project · Infosys</p>
+      <h1 class="hero-title">Redesigning healthcare claims for a <em>mobile-first world</em></h1>
+      <p class="hero-sub">Submitting a healthcare claim on mobile should be straightforward. For members of a global health insurance provider, it wasn't — because the experience had been adapted from web without ever being rethought for the hand that holds the phone.</p>
+      <p class="hero-disclaimer">Client project completed at Infosys. Client name withheld. Screens shown are member-facing UI. Proprietary data and internal workflows have been omitted.</p>
+      <dl class="hero-meta" aria-label="Project details">
+        <div class="meta-item"><dt class="meta-label">Role</dt><dd class="meta-val">Product designer</dd></div>
+        <div class="meta-item"><dt class="meta-label">Client</dt><dd class="meta-val">Global health insurer · via Infosys</dd></div>
+        <div class="meta-item"><dt class="meta-label">Type</dt><dd class="meta-val">End-to-end design</dd></div>
+        <div class="meta-item"><dt class="meta-label">Domain</dt><dd class="meta-val">Healthcare · Mobile</dd></div>
+      </dl>
     </div>
   </div>
-</div>
 
-<!-- PROBLEM -->
-<section id="problem">
-  <div class="container">
-    <div class="section-header fade-in">
-      <div>
-        <div class="section-number">01</div>
-        <h3>The problem</h3>
-      </div>
-      <div>
-        <h2>A web-first experience ported to mobile — without being redesigned for it</h2>
-        <p>The client's claims submission flow had been adapted from a web interface rather than built for mobile from the ground up. The result was a journey full of friction that shouldn't exist on a small screen: long scrolling lists, unoptimised input patterns, and navigation structures that assumed a mouse, not a thumb.</p>
-        <p>The cognitive load of submitting a claim — already high given the healthcare context — was made worse by an interface that didn't meet users where they were.</p>
-      </div>
-    </div>
-
-    <div class="friction-grid fade-in">
-      <div class="friction-cell">
-        <div class="friction-icon">FRICTION 01</div>
-        <div class="friction-label">Endless scrolling lists</div>
-        <div class="friction-sub">Country and currency fields required scrolling through hundreds of options with no smart defaults or pre-fill.</div>
-      </div>
-      <div class="friction-cell">
-        <div class="friction-icon">FRICTION 02</div>
-        <div class="friction-label">High cognitive load</div>
-        <div class="friction-sub">Web-based navigation structures forced users to hold too much context across steps with no clear progress signal.</div>
-      </div>
-      <div class="friction-cell">
-        <div class="friction-icon">FRICTION 03</div>
-        <div class="friction-label">Error-prone inputs</div>
-        <div class="friction-sub">Input patterns designed for desktop keyboards created unnecessary friction and mistakes on mobile touchscreens.</div>
-      </div>
-    </div>
-
-    <div class="tag-row fade-in">
-      <span class="tag-pill tag-green">Cross-functional collaboration</span>
-      <span class="tag-pill tag-blue">End-to-end design</span>
-    </div>
-  </div>
-</section>
-
-<!-- SCREENS -->
-<section id="screens">
-  <div class="container-wide">
-    <div class="container" style="padding:0;">
+  <section id="problem" aria-labelledby="problem-heading">
+    <div class="container">
       <div class="section-header fade-in">
         <div>
-          <div class="section-number">02</div>
-          <h3>Screens</h3>
+          <div class="section-number" aria-hidden="true">01</div>
+          <h2 id="problem-heading">The problem</h2>
         </div>
         <div>
-          <h2>Before and after the redesign</h2>
-          <p>The redesign focused on two key moments in the claims journey — the overall flow structure and the individual input interactions — transforming both from web-adapted patterns into mobile-native ones.</p>
+          <h3>A web-first experience ported to mobile — without being redesigned for it</h3>
+          <p>The claims submission flow had been adapted from a web interface rather than built for mobile from the ground up. The result was a journey full of friction that shouldn't exist on a small screen: long scrolling lists, unoptimised input patterns, and navigation structures that assumed a mouse, not a thumb.</p>
+          <p>The cognitive load of submitting a claim — already high given the healthcare context — was made worse by an interface that didn't meet users where they were.</p>
+        </div>
+      </div>
+      <div class="friction-grid fade-in" role="list" aria-label="Key friction points in the original experience">
+        <div class="friction-cell" role="listitem">
+          <div class="friction-icon" aria-hidden="true">FRICTION 01</div>
+          <div class="friction-label">Endless scrolling lists</div>
+          <p class="friction-sub">Country and currency fields required scrolling through hundreds of options with no smart defaults or pre-fill.</p>
+        </div>
+        <div class="friction-cell" role="listitem">
+          <div class="friction-icon" aria-hidden="true">FRICTION 02</div>
+          <div class="friction-label">High cognitive load</div>
+          <p class="friction-sub">Web-based navigation structures forced users to hold too much context across steps with no clear progress signal.</p>
+        </div>
+        <div class="friction-cell" role="listitem">
+          <div class="friction-icon" aria-hidden="true">FRICTION 03</div>
+          <div class="friction-label">Error-prone inputs</div>
+          <p class="friction-sub">Input patterns designed for desktop keyboards created unnecessary friction and mistakes on mobile touchscreens.</p>
+        </div>
+      </div>
+      <ul class="tag-row fade-in" aria-label="Project tags" role="list">
+        <li class="tag-pill tag-green">Cross-functional collaboration</li>
+        <li class="tag-pill tag-blue">End-to-end design</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="screens" aria-labelledby="screens-heading">
+    <div class="container-wide">
+      <div class="container" style="padding:0;">
+        <div class="section-header fade-in">
+          <div>
+            <div class="section-number" aria-hidden="true">02</div>
+            <h2 id="screens-heading">Screens</h2>
+          </div>
+          <div>
+            <h3>Before and after the redesign</h3>
+            <p>The redesign focused on two key moments in the claims journey — the overall flow structure and the individual input interactions — transforming both from web-adapted patterns into mobile-native ones.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="container" style="padding:0;">
+        <div class="screen-block fade-in">
+          <div class="screen-label">
+            <span class="screen-tag tag-before">Before</span>
+            <span class="screen-name">Claims flow — original design</span>
+          </div>
+          <div class="screen-frame">
+            <div class="screen-frame-bar" aria-hidden="true"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+            <img src="bupa-before.png" alt="Original claims flow showing a web-adapted form with a generic Select the patient dropdown, a thin horizontal progress bar, and a long scrolling layout" style="width:100%;display:block;background:var(--paper-3);min-height:280px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="screen-placeholder" style="display:none;" aria-label="Original design placeholder">[ Original design — drop export here ]</div>
+          </div>
+          <p class="screen-caption">The original interface shows the hallmarks of a web-first form ported to mobile: a generic Select the patient dropdown, a thin horizontal progress bar with no step context, and a layout that requires scrolling to see the full form. There's no sense of where the user is in the journey or how much is left.</p>
+        </div>
+
+        <div class="screen-block fade-in">
+          <div class="screen-label">
+            <span class="screen-tag tag-after">After</span>
+            <span class="screen-name">Claims flow — redesigned experience</span>
+          </div>
+          <div class="screen-frame">
+            <div class="screen-frame-bar" aria-hidden="true"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+            <img src="bupa-after.png" alt="Redesigned claims flow showing circular step progress indicators labelled 1 of 5 and 2 of 5, segmented controls for Dental versus Medical treatment type, and radio button lists for treatment selection" style="width:100%;display:block;background:var(--paper-3);min-height:280px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="screen-placeholder" style="display:none;" aria-label="Redesigned flow placeholder">[ Redesign — drop export here ]</div>
+          </div>
+          <p class="screen-caption">The redesigned flow replaces web patterns with mobile-native ones: a circular progress indicator labels each step and previews what comes next, segmented controls replace dropdowns for binary choices like Dental versus Medical, and radio button lists make treatment selection scannable. Each screen carries only what it needs.</p>
         </div>
       </div>
     </div>
+  </section>
 
-    <div class="container" style="padding:0;">
-      <div class="screen-block fade-in">
-        <div class="screen-label">
-          <span class="screen-tag tag-before">Before</span>
-          <span class="screen-name">Claims flow — original design</span>
+  <section id="solution" aria-labelledby="solution-heading">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div>
+          <div class="section-number" aria-hidden="true">03</div>
+          <h2 id="solution-heading">Solution</h2>
         </div>
-        <div class="screen-frame">
-          <div class="screen-frame-bar"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-          <img src="bupa-before.png" alt="Original Bupa claims flow showing a web-adapted dropdown for patient selection, a flat horizontal progress bar, and generic form fields" style="width:100%;display:block;background:var(--paper-3);min-height:280px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="screen-placeholder" style="display:none;">[ Original design — drop export here ]</div>
+        <div>
+          <h3>Mobile-first, from the input up</h3>
+          <p>Rather than refining the existing structure, the redesign rethought each interaction point from the perspective of a member submitting a claim on their phone — often in a hurry, often in a stressful moment.</p>
         </div>
-        <p class="screen-caption">The original interface shows the hallmarks of a web-first form ported to mobile: a generic "Select the patient" dropdown, a thin horizontal progress bar with no step context, and a layout that requires scrolling to see the full form. There's no sense of where the user is in the journey or how much is left.</p>
       </div>
+      <ul class="solution-list fade-in" aria-label="Key solution decisions">
+        <li>
+          <div class="solution-key">Mobile-optimised input patterns</div>
+          <div class="solution-why">Native mobile controls replaced web-style inputs — reducing keystrokes, minimising error states, and making each field feel like it belongs on a phone rather than a form.</div>
+        </li>
+        <li>
+          <div class="solution-key">Pre-filled fields from location and claim history</div>
+          <div class="solution-why">Country and currency now default to the user's location and previous selections, eliminating the need to scroll through long lists entirely.</div>
+        </li>
+        <li>
+          <div class="solution-key">Simplified navigation across the claims journey</div>
+          <div class="solution-why">The multi-step flow was restructured around the user's mental model of submitting a claim — with clear progress indicators and fewer decisions per step.</div>
+        </li>
+        <li>
+          <div class="solution-key">Developer-ready specifications and interaction flows</div>
+          <div class="solution-why">Detailed handoff documentation ensured the design intent survived into build — covering edge cases, error states, and interaction behaviour across device sizes.</div>
+        </li>
+      </ul>
+    </div>
+  </section>
 
-      <div class="screen-block fade-in">
-        <div class="screen-label">
-          <span class="screen-tag tag-after">After</span>
-          <span class="screen-name">Claims flow — redesigned experience</span>
+  <section id="impact" aria-labelledby="impact-heading">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div>
+          <div class="section-number" aria-hidden="true">04</div>
+          <h2 id="impact-heading">Impact</h2>
         </div>
-        <div class="screen-frame">
-          <div class="screen-frame-bar"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-          <img src="bupa-after.png" alt="Redesigned Bupa claims flow showing circular step progress indicators, segmented controls for treatment type, radio button lists, and clear next-step labelling" style="width:100%;display:block;background:var(--paper-3);min-height:280px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="screen-placeholder" style="display:none;">[ Redesign — drop export here ]</div>
+        <div>
+          <h3>Clarity that converted</h3>
+          <p>The redesigned flow shipped and received direct positive feedback from members — with users specifically calling out the pre-fill behaviour that had previously been one of the biggest pain points in the journey.</p>
         </div>
-        <p class="screen-caption">The redesigned flow replaces web patterns with mobile-native ones throughout: a circular progress indicator labels each step ("1 of 5", "2 of 5") and previews what comes next, segmented controls replace dropdowns for binary choices like Dental vs Medical, and radio button lists make treatment selection scannable rather than buried in a scroll. Each screen carries only what it needs.</p>
+      </div>
+      <blockquote class="problem-quote fade-in">
+        <p>"I like it after the latest updates! Pre-filled fields based on your location/previous claims — no scrolling down endless list in country or currency. Well done!"</p>
+        <cite>— Member, post-launch feedback</cite>
+      </blockquote>
+      <div class="impact-grid fade-in" role="list" aria-label="Impact metrics">
+        <div class="impact-card" role="listitem">
+          <div class="impact-metric" aria-label="Increased conversions">↑ Conversions</div>
+          <div class="impact-label">Improved clarity and simplified navigation drove higher claim submission completion rates</div>
+        </div>
+        <div class="impact-card" role="listitem">
+          <div class="impact-metric" aria-label="Reduced friction">↓ Friction</div>
+          <div class="impact-label">Pre-filled country and currency fields eliminated the most-cited source of frustration in the original flow</div>
+        </div>
+        <div class="impact-card" role="listitem">
+          <div class="impact-metric">Mobile-first</div>
+          <div class="impact-label">The redesign established a mobile-native pattern library for the claims journey, usable across future iterations</div>
+        </div>
+        <div class="impact-card" role="listitem">
+          <div class="impact-metric">Shipped</div>
+          <div class="impact-label">End-to-end delivery from research through developer-ready handoff — live with members</div>
+        </div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- SOLUTION -->
-<section id="solution">
-  <div class="container">
-    <div class="section-header fade-in">
-      <div>
-        <div class="section-number">03</div>
-        <h3>Solution</h3>
-      </div>
-      <div>
-        <h2>Mobile-first, from the input up</h2>
-        <p>Rather than refining the existing structure, the redesign rethought each interaction point from the perspective of a member submitting a claim on their phone — often in a hurry, often in a stressful moment.</p>
-      </div>
-    </div>
-
-    <ul class="solution-list fade-in">
-      <li>
-        <div class="solution-key">Mobile-optimised input patterns</div>
-        <div class="solution-why">Native mobile controls replaced web-style inputs — reducing keystrokes, minimising error states, and making each field feel like it belongs on a phone rather than a form.</div>
-      </li>
-      <li>
-        <div class="solution-key">Pre-filled fields from location and claim history</div>
-        <div class="solution-why">Country and currency — two of the most friction-heavy fields — now default to the user's location and previous selections, eliminating the need to scroll through long lists entirely.</div>
-      </li>
-      <li>
-        <div class="solution-key">Simplified navigation across the claims journey</div>
-        <div class="solution-why">The multi-step flow was restructured around the user's mental model of submitting a claim, not the system's data model — with clear progress indicators and fewer decisions per step.</div>
-      </li>
-      <li>
-        <div class="solution-key">Developer-ready specifications and interaction flows</div>
-        <div class="solution-why">Detailed handoff documentation ensured the design intent survived into build — covering edge cases, error states, and interaction behaviour across device sizes.</div>
-      </li>
-    </ul>
-  </div>
-</section>
-
-<!-- IMPACT -->
-<section id="impact">
-  <div class="container">
-    <div class="section-header fade-in">
-      <div>
-        <div class="section-number">04</div>
-        <h3>Impact</h3>
-      </div>
-      <div>
-        <h2>Clarity that converted</h2>
-        <p>The redesigned flow shipped and received direct positive feedback from members — with users specifically calling out the pre-fill behaviour that had previously been one of the biggest pain points in the journey.</p>
-      </div>
-    </div>
-
-    <div class="problem-quote fade-in">
-      <p>"I like it after the latest updates! Pre-filled fields based on your location/previous claims — no scrolling down endless list in country or currency. Well done!"</p>
-      <cite>— Member, post-launch feedback</cite>
-    </div>
-
-    <div class="impact-grid fade-in">
-      <div class="impact-card">
-        <div class="impact-metric">↑ Conversions</div>
-        <div class="impact-label">Improved clarity and simplified navigation drove higher claim submission completion rates</div>
-      </div>
-      <div class="impact-card">
-        <div class="impact-metric">↓ Friction</div>
-        <div class="impact-label">Pre-filled country and currency fields eliminated the most-cited source of frustration in the original flow</div>
-      </div>
-      <div class="impact-card">
-        <div class="impact-metric">Mobile-first</div>
-        <div class="impact-label">The redesign established a mobile-native pattern library for the claims journey, usable across future iterations</div>
-      </div>
-      <div class="impact-card">
-        <div class="impact-metric">Shipped</div>
-        <div class="impact-label">End-to-end delivery from research through developer-ready handoff — live with members</div>
-      </div>
-    </div>
-  </div>
-</section>
+  </section>
+</main>
 
 <div class="container">
-  <footer class="fade-in">
+  <footer role="contentinfo">
     <span class="footer-note">Healthcare claims redesign · Infosys · Sharika · Client project</span>
-    <a class="footer-link" href="mailto:sharikabenny@gmail.com">Email me →</a>
+    <a class="footer-link" href="mailto:sharikabenny@gmail.com" aria-label="Email Sharika at sharikabenny@gmail.com">Email me →</a>
   </footer>
 </div>
 
 <script>
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.08 });
-document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+  const root = document.documentElement;
+  const toggle = document.getElementById('themeToggle');
+  const icon = document.getElementById('toggleIcon');
+  const label = document.getElementById('toggleLabel');
+  const saved = localStorage.getItem('theme') || 'light';
+  applyTheme(saved);
+  toggle.addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    applyTheme(next); localStorage.setItem('theme', next);
+  });
+  function applyTheme(theme) {
+    root.setAttribute('data-theme', theme);
+    icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+    label.textContent = theme === 'dark' ? 'Light' : 'Dark';
+    toggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+  }
+
+  const s = document.createElement('style');
+  s.textContent = `
+    @media(max-width:640px) {
+      .nav-links { display:none; }
+      .screen-frame img { max-height:240px; object-fit:cover; object-position:top; }
+      .solution-list li { grid-template-columns:1fr; gap:0.5rem; }
+      .impact-grid { grid-template-columns:1fr; }
+      .friction-grid { grid-template-columns:1fr; }
+    }
+    .screen-frame img { cursor:zoom-in; }
+    .lb { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.93); z-index:9999; align-items:center; justify-content:center; cursor:zoom-out; }
+    .lb.open { display:flex; }
+    .lb img { max-width:92vw; max-height:92vh; border-radius:8px; touch-action:pinch-zoom; cursor:default; object-fit:contain; }
+    .lb-close { position:fixed; top:1rem; right:1rem; background:rgba(255,255,255,0.12); border:none; color:#fff; font-size:1.25rem; width:38px; height:38px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+    .lb-close:hover { background:rgba(255,255,255,0.25); }
+    .lb-close:focus-visible { outline:2px solid #fff; outline-offset:3px; }
+    .lb-caption { position:fixed; bottom:1.5rem; left:50%; transform:translateX(-50%); color:rgba(255,255,255,0.6); font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.05em; white-space:nowrap; }
+  `;
+  document.head.appendChild(s);
+
+  const lb = document.createElement('div');
+  lb.className = 'lb'; lb.id = 'lb';
+  lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true'); lb.setAttribute('aria-label', 'Image viewer');
+  lb.innerHTML = `<button class="lb-close" id="lbClose" aria-label="Close image viewer">✕</button><img id="lbImg" src="" alt=""><p class="lb-caption">Tap outside or press Esc to close · Pinch to zoom</p>`;
+  document.body.appendChild(lb);
+
+  const lbEl = document.getElementById('lb');
+  const lbImg = document.getElementById('lbImg');
+
+  document.querySelectorAll('.screen-frame img').forEach(img => {
+    img.setAttribute('tabindex', '0');
+    img.setAttribute('role', 'button');
+    img.setAttribute('aria-label', `View full size: ${img.alt}`);
+    const open = () => { lbImg.src = img.src; lbImg.alt = img.alt; lbEl.classList.add('open'); document.body.style.overflow = 'hidden'; };
+    img.addEventListener('click', open);
+    img.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') open(); });
+  });
+
+  const closeLb = () => { lbEl.classList.remove('open'); document.body.style.overflow = ''; };
+  lbEl.addEventListener('click', e => { if (e.target !== lbImg) closeLb(); });
+  document.getElementById('lbClose').addEventListener('click', closeLb);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
 </script>
 </body>
 </html>

@@ -1,360 +1,341 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sharika — UX Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --ink: #0F0E0D;
-    --ink-2: #3D3B38;
-    --ink-3: #7A7670;
-    --ink-4: #B8B4AD;
-    --paper: #F5F2EE;
-    --paper-2: #EDE9E3;
-    --paper-3: #E2DDD6;
-    --accent: #1B4332;
-    --accent-light: #D8F3DC;
-    --accent-mid: #52B788;
+  :root[data-theme="light"] {
+    --ink: #0F0E0D; --ink-2: #3D3B38; --ink-3: #2E2C2A; --ink-4: #4A4845;
+    --paper: #F5F2EE; --paper-2: #EDE9E3; --paper-3: #E2DDD6;
+    --accent: #1B4332; --accent-light: #D8F3DC; --accent-mid: #52B788;
     --rule: rgba(15,14,13,0.1);
-    --font-display: 'DM Serif Display', Georgia, serif;
-    --font-body: 'DM Sans', sans-serif;
-    --font-mono: 'DM Mono', monospace;
+    --toggle-bg: #E2DDD6; --toggle-icon: '🌙';
+  }
+  :root[data-theme="dark"] {
+    --ink: #F0EDE8; --ink-2: #C9C4BC; --ink-3: #A8A39B; --ink-4: #7A7670;
+    --paper: #1A1917; --paper-2: #232220; --paper-3: #2C2A28;
+    --accent: #52B788; --accent-light: #1B3A2A; --accent-mid: #52B788;
+    --rule: rgba(240,237,232,0.08);
+    --toggle-bg: #2C2A28; --toggle-icon: '☀️';
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body { background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.7; font-weight: 300; }
+  body { background: var(--paper); color: var(--ink); font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.7; font-weight: 300; transition: background 0.3s ease, color 0.3s ease; }
 
-  nav {
-    position: sticky; top: 0; z-index: 100;
-    background: var(--paper); border-bottom: 1px solid var(--rule);
-    padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 56px;
-  }
-  .nav-logo { font-family: var(--font-mono); font-size: 13px; font-weight: 500; color: var(--ink); letter-spacing: 0.04em; text-decoration: none; }
+  .skip-link { position: absolute; top: -100%; left: 1rem; background: var(--accent); color: #fff; padding: 8px 16px; border-radius: 4px; font-family: 'DM Mono', monospace; font-size: 12px; text-decoration: none; z-index: 200; }
+  .skip-link:focus { top: 1rem; }
+
+  nav { position: sticky; top: 0; z-index: 100; background: var(--paper); border-bottom: 1px solid var(--rule); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 56px; transition: background 0.3s ease; }
+  .nav-left { display: flex; align-items: center; gap: 2rem; }
+  .nav-logo { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; color: var(--ink); letter-spacing: 0.04em; text-decoration: none; }
+  .nav-logo:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
   .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a { font-size: 12px; font-weight: 400; color: var(--ink-3); text-decoration: none; letter-spacing: 0.03em; transition: color 0.15s; cursor: pointer; }
+  .nav-links a { font-size: 12px; color: var(--ink-3); text-decoration: none; letter-spacing: 0.03em; transition: color 0.15s; }
   .nav-links a:hover { color: var(--ink); }
+  .nav-links a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
+
+  /* THEME TOGGLE */
+  .theme-toggle { background: var(--toggle-bg); border: 1px solid var(--rule); border-radius: 20px; padding: 4px 10px; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 6px; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--ink-3); letter-spacing: 0.04em; transition: background 0.2s; }
+  .theme-toggle:hover { background: var(--paper-3); }
+  .theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 20px; }
 
   .container { max-width: 780px; margin: 0 auto; padding: 0 2rem; }
+  section { padding: 5rem 0; border-bottom: 1px solid var(--rule); }
+  section:last-child { border-bottom: none; }
 
-  /* HERO */
   .hero { padding: 7rem 0 5rem; border-bottom: 1px solid var(--rule); }
-  .hero-eyebrow {
-    font-family: var(--font-mono); font-size: 11px; font-weight: 500;
-    color: var(--ink-3); letter-spacing: 0.1em; text-transform: uppercase;
-    margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px;
-  }
+  .hero-eyebrow { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; color: var(--ink-3); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px; }
   .hero-eyebrow::before { content: ''; display: block; width: 24px; height: 1px; background: var(--ink-4); }
-  .hero-title {
-    font-family: var(--font-display); font-size: clamp(2.2rem, 5vw, 3.4rem);
-    line-height: 1.1; font-weight: 400; color: var(--ink);
-    margin-bottom: 1.5rem; max-width: 620px;
-  }
+  .hero-title { font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(2.2rem, 5vw, 3.4rem); line-height: 1.1; font-weight: 400; color: var(--ink); margin-bottom: 1.5rem; max-width: 620px; }
   .hero-title em { font-style: italic; color: var(--accent); }
   .hero-sub { font-size: 17px; font-weight: 300; color: var(--ink-2); max-width: 500px; line-height: 1.65; margin-bottom: 2.5rem; }
   .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-  .btn-primary {
-    font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
-    background: var(--accent); color: #fff; border: none; border-radius: 4px; padding: 10px 20px; cursor: pointer; transition: background 0.15s;
-  }
-  .btn-primary:hover { background: #0F2A1E; }
-  .btn-secondary {
-    font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
-    background: transparent; color: var(--ink-2); border: 1px solid var(--rule); border-radius: 4px; padding: 10px 20px; cursor: pointer; transition: background 0.15s;
-  }
+  .btn-primary { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; background: var(--accent); color: #fff; border: none; border-radius: 4px; padding: 10px 20px; cursor: pointer; transition: opacity 0.15s; }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-primary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+  .btn-secondary { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; background: transparent; color: var(--ink-2); border: 1px solid var(--rule); border-radius: 4px; padding: 10px 20px; text-decoration: none; transition: background 0.15s; display: inline-block; }
   .btn-secondary:hover { background: var(--paper-2); }
+  .btn-secondary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 
-  /* SECTIONS */
-  section { padding: 5rem 0; border-bottom: 1px solid var(--rule); }
-  section:last-child { border-bottom: none; }
   .section-header { display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start; margin-bottom: 3rem; }
-  .section-number { font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); letter-spacing: 0.06em; margin-bottom: 0.5rem; }
-  h3 { font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--ink-3); letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 1rem; }
-  h2 { font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 400; line-height: 1.2; color: var(--ink); margin-bottom: 1.25rem; }
+  .section-number { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--ink-4); letter-spacing: 0.06em; margin-bottom: 0.5rem; }
+  h2 { font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 400; line-height: 1.2; color: var(--ink); margin-bottom: 1.25rem; }
+  h3 { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; color: var(--ink-3); letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 1rem; }
   p { color: var(--ink-2); margin-bottom: 1rem; font-weight: 300; }
   p:last-child { margin-bottom: 0; }
 
-  /* CASE STUDIES */
-  .case-list { display: flex; flex-direction: column; gap: 0; }
-  .case-item {
-    display: grid; grid-template-columns: 1fr 2fr; gap: 3rem;
-    padding: 2.5rem 0; border-bottom: 1px solid var(--rule); align-items: start;
-    cursor: pointer; transition: background 0.15s;
-  }
-  .case-item:last-child { border-bottom: none; }
-  .case-item:hover .case-arrow { transform: translateX(4px); }
+  .case-list { display: flex; flex-direction: column; }
+  article.case-item { display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; padding: 2.5rem 0; border-bottom: 1px solid var(--rule); align-items: start; }
+  article.case-item:last-child { border-bottom: none; }
   .case-left { display: flex; flex-direction: column; gap: 0.75rem; }
-  .case-num { font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); letter-spacing: 0.06em; }
-  .case-tag {
-    font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
-    display: inline-block; padding: 3px 10px; border-radius: 20px;
-  }
+  .case-num { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--ink-4); letter-spacing: 0.06em; }
+  .case-tag { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; display: inline-block; padding: 3px 10px; border-radius: 20px; }
   .tag-health { background: var(--accent-light); color: var(--accent); }
-  .tag-enterprise { background: #D6E8FA; color: #1A3A5C; }
-  .tag-ai { background: #FDEBD0; color: #7B3F00; }
-  .case-thumb {
-    width: 100%; aspect-ratio: 4/3; border-radius: 8px;
-    border: 1px solid var(--rule); background: var(--paper-3);
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--font-mono); font-size: 10px; color: var(--ink-4); letter-spacing: 0.06em;
-    margin-top: 0.75rem;
-  }
+  .tag-enterprise { background: #1A3A5C; color: #90C4F0; }
+  [data-theme="light"] .tag-enterprise { background: #D6E8FA; color: #1A3A5C; }
+  .case-thumb { width: 100%; aspect-ratio: 4/3; border-radius: 8px; border: 1px solid var(--rule); background: var(--paper-3); display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--ink-4); letter-spacing: 0.06em; margin-top: 0.75rem; overflow: hidden; }
+  .case-thumb img { width: 100%; height: 100%; object-fit: cover; }
   .case-right { padding-top: 0.25rem; }
-  .case-title { font-family: var(--font-display); font-size: 1.5rem; font-weight: 400; color: var(--ink); margin-bottom: 0.75rem; line-height: 1.2; }
+  .case-title { font-family: 'DM Serif Display', Georgia, serif; font-size: 1.5rem; font-weight: 400; color: var(--ink); margin-bottom: 0.75rem; line-height: 1.2; }
   .case-desc { font-size: 14px; color: var(--ink-3); line-height: 1.6; margin-bottom: 1rem; }
-  .case-footer-row { display: flex; justify-content: space-between; align-items: center; margin-top: 1.25rem; }
-  .case-tools { font-family: var(--font-mono); font-size: 10px; color: var(--ink-4); letter-spacing: 0.04em; }
-  .case-arrow { font-size: 14px; color: var(--accent); transition: transform 0.2s; font-weight: 500; }
+  .case-footer-row { display: flex; justify-content: space-between; align-items: center; margin-top: 1.25rem; flex-wrap: wrap; gap: 0.75rem; }
+  .case-tools { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--ink-4); letter-spacing: 0.04em; }
+  .case-arrow { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; background: transparent; color: var(--ink-2); border: 1px solid var(--rule); border-radius: 4px; padding: 8px 16px; text-decoration: none; white-space: nowrap; transition: background 0.15s; }
+  .case-arrow:hover { background: var(--paper-2); }
+  .case-arrow:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 
-  /* PROCESS */
-  .process-pipeline {
-    display: flex; align-items: stretch; gap: 0;
-    border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; margin-top: 1rem;
-  }
+  .process-pipeline { display: flex; align-items: stretch; border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; margin-top: 1rem; }
   .pipe-step { flex: 1; padding: 1.25rem 1rem; border-right: 1px solid var(--rule); background: var(--paper); }
   .pipe-step:last-child { border-right: none; }
-  .pipe-icon { font-family: var(--font-mono); font-size: 10px; color: var(--ink-4); letter-spacing: 0.06em; margin-bottom: 0.5rem; }
+  .pipe-icon { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--ink-4); letter-spacing: 0.06em; margin-bottom: 0.5rem; }
   .pipe-label { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
   .pipe-sub { font-size: 11px; color: var(--ink-3); line-height: 1.5; }
 
-  /* SKILLS */
+  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; margin: 2rem 0; }
+  .stat-cell { background: var(--paper); padding: 1.5rem; }
+  .stat-num { font-family: 'DM Serif Display', Georgia, serif; font-size: 2rem; font-weight: 400; color: var(--accent); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-desc { font-size: 12px; color: var(--ink-3); line-height: 1.4; }
   .skill-categories { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1rem; }
-  .skill-cat-label { font-family: var(--font-mono); font-size: 10px; color: var(--ink-4); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.75rem; }
+  .skill-cat-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--ink-4); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.75rem; }
   .skill-pills { display: flex; flex-wrap: wrap; gap: 6px; }
   .skill-pill { font-size: 13px; background: var(--paper-2); border: 1px solid var(--rule); border-radius: 20px; padding: 4px 12px; color: var(--ink-3); font-weight: 300; }
 
-  /* STATS */
-  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; margin: 2rem 0; }
-  .stat-cell { background: var(--paper); padding: 1.5rem; }
-  .stat-num { font-family: var(--font-display); font-size: 2rem; font-weight: 400; color: var(--accent); line-height: 1; margin-bottom: 0.4rem; }
-  .stat-desc { font-size: 12px; color: var(--ink-3); line-height: 1.4; }
-
-  /* FOOTER */
   footer { padding: 3rem 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
-  .footer-note { font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); letter-spacing: 0.04em; }
-  .footer-links { display: flex; gap: 1.5rem; }
-  .footer-links a { font-family: var(--font-mono); font-size: 11px; color: var(--accent); letter-spacing: 0.04em; text-decoration: none; cursor: pointer; }
+  .footer-note { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--ink-4); letter-spacing: 0.04em; }
+  .footer-links a { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.04em; text-decoration: none; margin-left: 1.5rem; }
+  .footer-links a:hover { text-decoration: underline; }
+  .footer-links a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
 
   .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
   .fade-in.visible { opacity: 1; transform: none; }
 
   @media (max-width: 640px) {
-    .section-header, .case-item, .skill-categories { grid-template-columns: 1fr; gap: 1rem; }
+    .section-header, article.case-item, .skill-categories { grid-template-columns: 1fr; gap: 1rem; }
     .process-pipeline { flex-direction: column; }
     .pipe-step { border-right: none; border-bottom: 1px solid var(--rule); }
     .stat-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
   }
 </style>
 </head>
 <body>
 
-<nav>
-  <span class="nav-logo">Sharika Benny</span>
-  <ul class="nav-links">
-    <li><a>Work</a></li>
-    <li><a>Process</a></li>
-    <li><a>Skills</a></li>
-    <li><a>Contact</a></li>
-  </ul>
+<a class="skip-link" href="#work">Skip to main content</a>
+
+<nav aria-label="Main navigation">
+  <div class="nav-left">
+    <span class="nav-logo">Sharika</span>
+    <ul class="nav-links" role="list">
+      <li><a href="#work" aria-label="View selected work">Work</a></li>
+      <li><a href="#process" aria-label="View design process">Process</a></li>
+      <li><a href="#skills" aria-label="View skills and tools">Skills</a></li>
+      <li><a href="#contact" aria-label="Contact Sharika">Contact</a></li>
+    </ul>
+  </div>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+    <span id="toggleIcon">🌙</span>
+    <span id="toggleLabel">Dark</span>
+  </button>
 </nav>
 
-<div class="hero">
-  <div class="container">
-    <div class="hero-eyebrow">Product designer · Available for new opportunities</div>
-    <h1 class="hero-title">Simplifying<em>complex, data-heavy</em> experiences into simple, intuitive product experiences</h1>
-    <p class="hero-sub">Hi, I’m Sharika, a Product Designer focused on healthcare and enterprise platforms. I create intuitive workflows for data-heavy products using modern UX practices and AI-assisted design methods.</p>
-    <div class="hero-actions">
-      <button class="btn-primary" onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'})">View my work</button>
-      <a href="https://docs.google.com/document/d/1nsuUvcMDv08ACh4t9v28uDcCqWShFkOuxu76n5jmpWE/edit?usp=sharing" target="_blank" class="btn-secondary" style="text-decoration:none;">View my resume</a>
-    </div>
-  </div>
-</div>
-
-<section id="work">
-  <div class="container">
-    <div class="section-header fade-in">
-      <div>
-        <div class="section-number">01</div>
-        <h3>Selected work</h3>
-      </div>
-      <div>
-        <h2>Three active case studies across healthcare and enterprise</h2>
-        <p>Each project reflects a different slice of the same core challenge — designing clarity into systems where complexity is the default.</p>
-      </div>
-    </div>
-
-    <div class="case-list">
-      <div class="case-item fade-in" onclick="location.href='clearchart.html'">
-        <div class="case-left">
-          <span class="case-num">Case study 01</span>
-          <span class="case-tag tag-health">Healthcare</span>
-          <div class="case-thumb">[ Screen export ]</div>
-        </div>
-        <div class="case-right">
-          <div class="case-title">Designing for the gap between diagnosis and coverage</div>
-          <p class="case-desc">A concept feature for UST Healthproof's risk adjustment ecosystem — turning unstructured medical records into actionable diagnostic signals across four connected workflows.</p>
-          <div class="case-footer-row">
-            <span class="case-tools">Figma · UX Research · AI UX · Prototyping</span>
-            <a class="case-arrow" href="clearchart.html">View case study →</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="case-item fade-in" onclick="location.href='goodreads.html'">
-        <div class="case-left">
-          <span class="case-num">Case study 02</span>
-          <span class="case-tag tag-enterprise">Consumer app</span>
-          <div class="case-thumb">[ Screen export ]</div>
-        </div>
-        <div class="case-right">
-          <div class="case-title">Redesigning reading into a habit worth keeping</div>
-          <p class="case-desc">A research-driven speculative redesign of Goodreads — shifting the product from a social-first directory to a reading-first companion that amplifies how people actually track books.</p>
-          <div class="case-footer-row">
-            <span class="case-tools">Figma · UX Research · Reddit Reviews</span>
-            <a class="case-arrow" href="goodreads.html">View case study →</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="case-item fade-in" onclick="location.href='bupa-claims.html'">
-        <div class="case-left">
-          <span class="case-num">Case study 03</span>
-          <span class="case-tag tag-health">Healthcare · Mobile</span>
-          <div class="case-thumb">[ Screen export ]</div>
-        </div>
-        <div class="case-right">
-          <div class="case-title">Redesigning healthcare claims for a mobile-first world</div>
-          <p class="case-desc">End-to-end redesign of a healthcare claims submission flow for a global insurer — transforming a web-adapted experience into a native, frictionless journey that shipped to members.</p>
-          <div class="case-footer-row">
-            <span class="case-tools">Figma · Mobile UX · End-to-end Design · Handoff</span>
-            <a class="case-arrow" href="bupa-claims.html">View case study →</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="case-item fade-in" style="opacity:0.5;pointer-events:none;">
-        <div class="case-left">
-          <span class="case-num">Case study 04</span>
-          <span class="case-tag tag-enterprise">Coming soon</span>
-          <div class="case-thumb">—</div>
-        </div>
-        <div class="case-right">
-          <div class="case-title">More work in progress</div>
-          <p class="case-desc">A fourth case study is on its way. Check back soon!</p>
-          <div class="case-footer-row">
-            <span class="case-tools">—</span>
-            <span class="case-arrow">Coming soon</span>
-          </div>
-        </div>
+<main>
+  <div class="hero">
+    <div class="container">
+      <p class="hero-eyebrow" aria-label="Product designer, available for new opportunities">Product designer · Available for new opportunities</p>
+      <h1 class="hero-title">Making <em>complex, data-heavy</em> experiences feel simple</h1>
+      <p class="hero-sub">Hi, I'm Sharika — an AI-Enhanced Product Designer simplifying complex, data-heavy experiences in healthcare and enterprise products.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" aria-label="Scroll down to view my work" onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'})">View my work</button>
+        <a href="https://docs.google.com/document/d/1nsuUvcMDv08ACh4t9v28uDcCqWShFkOuxu76n5jmpWE/edit?usp=sharing" target="_blank" class="btn-secondary" aria-label="View Sharika's resume in Google Docs">View my resume</a>
       </div>
     </div>
   </div>
-</section>
 
-<section id="process">
-  <div class="container">
-    <div class="section-header fade-in">
-      <div>
-        <div class="section-number">02</div>
-        <h3>How I work</h3>
-      </div>
-      <div>
-        <h2>A process built around reducing ambiguity and keeping things simple</h2>
-        <p>I love working through complexity by making it legible — to users, to stakeholders, and to the teams building the product.</p>
-      </div>
-    </div>
-    <div class="process-pipeline fade-in">
-      <div class="pipe-step">
-        <div class="pipe-icon">STEP 01</div>
-        <div class="pipe-label">Discover</div>
-        <div class="pipe-sub">Research, interviews, and understanding the full problem space.</div>
-      </div>
-      <div class="pipe-step">
-        <div class="pipe-icon">STEP 02</div>
-        <div class="pipe-label">Define</div>
-        <div class="pipe-sub">Synthesising insights into clear problem statements and measurable goals.</div>
-      </div>
-      <div class="pipe-step">
-        <div class="pipe-icon">STEP 03</div>
-        <div class="pipe-label">Design</div>
-        <div class="pipe-sub">Iterating from wireframes to high-fidelity, testable prototypes.</div>
-      </div>
-      <div class="pipe-step">
-        <div class="pipe-icon">STEP 04</div>
-        <div class="pipe-label">Test</div>
-        <div class="pipe-sub">Validating with real users and refining based on findings.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="skills">
-  <div class="container">
-    <div class="section-header fade-in">
-      <div>
-        <div class="section-number">03</div>
-        <h3>Skills & tools</h3>
-      </div>
-      <div>
-        <h2>What I bring to the table</h2>
-        <p>A mix of design and illustration craft, research rigour, and lots of enthusiasm — with a particular focus on AI-augmented workflows, healthcare systems, and enterprise data products.</p>
-      </div>
-    </div>
-    <div class="stat-grid fade-in">
-      <div class="stat-cell">
-        <div class="stat-num">2+</div>
-        <div class="stat-desc">years designing for healthcare and enterprise domains</div>
-      </div>
-      <div class="stat-cell">
-        <div class="stat-num">AI-first</div>
-        <div class="stat-desc">designing with and for AI systems — trust, explainability, and human oversight</div>
-      </div>
-      <div class="stat-cell">
-        <div class="stat-num">End-to-end</div>
-        <div class="stat-desc">research through delivery, concept through system design</div>
-      </div>
-    </div>
-    <div class="skill-categories fade-in">
-      <div>
-        <div class="skill-cat-label">Design & craft</div>
-        <div class="skill-pills">
-          <span class="skill-pill">Figma</span>
-          <span class="skill-pill">Prototyping</span>
-          <span class="skill-pill">Interaction design</span>
-          <span class="skill-pill">Design systems</span>
-          <span class="skill-pill">Accessibility</span>
+  <section id="work" aria-labelledby="work-heading">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div>
+          <div class="section-number" aria-hidden="true">01</div>
+          <h3 id="work-heading">Selected work</h3>
+        </div>
+        <div>
+          <h2>Four case studies across healthcare and enterprise</h2>
+          <p>Each project reflects a different slice of the same core challenge — designing clarity into systems where complexity is the default.</p>
         </div>
       </div>
-      <div>
-        <div class="skill-cat-label">Research & strategy</div>
-        <div class="skill-pills">
-          <span class="skill-pill">UX research</span>
-          <span class="skill-pill">Usability testing</span>
-          <span class="skill-pill">Journey mapping</span>
-          <span class="skill-pill">AI UX</span>
-          <span class="skill-pill">Healthcare UX</span>
-          <span class="skill-pill">Enterprise products</span>
+
+      <div class="case-list" role="list">
+        <article class="case-item fade-in" role="listitem" aria-label="Case study 01: ClearChart">
+          <div class="case-left">
+            <span class="case-num" aria-hidden="true">Case study 01</span>
+            <span class="case-tag tag-health">Healthcare</span>
+            <div class="case-thumb" role="img" aria-label="ClearChart case study cover">[ Screen export ]</div>
+          </div>
+          <div class="case-right">
+            <h2 class="case-title">Designing for the gap between diagnosis and coverage</h2>
+            <p class="case-desc">A concept feature for UST Healthproof's risk adjustment ecosystem — turning unstructured medical records into actionable diagnostic signals across four connected workflows.</p>
+            <div class="case-footer-row">
+              <span class="case-tools" aria-label="Tools used">Figma · UX Research · AI UX · Prototyping</span>
+              <a class="case-arrow" href="clearchart.html" aria-label="View ClearChart case study">View case study</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="case-item fade-in" role="listitem" aria-label="Case study 02: Healthcare claims redesign">
+          <div class="case-left">
+            <span class="case-num" aria-hidden="true">Case study 02</span>
+            <span class="case-tag tag-health">Healthcare · Mobile</span>
+            <div class="case-thumb" role="img" aria-label="Healthcare claims case study cover">[ Screen export ]</div>
+          </div>
+          <div class="case-right">
+            <h2 class="case-title">Redesigning healthcare claims for a mobile-first world</h2>
+            <p class="case-desc">End-to-end redesign of a healthcare claims submission flow for a global insurer — transforming a web-adapted experience into a native, frictionless journey that shipped to members.</p>
+            <div class="case-footer-row">
+              <span class="case-tools" aria-label="Tools used">Figma · Mobile UX · End-to-end Design · Handoff</span>
+              <a class="case-arrow" href="bupa-claims.html" aria-label="View healthcare claims case study">View case study</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="case-item fade-in" role="listitem" aria-label="Case study 03: Goodreads redesign">
+          <div class="case-left">
+            <span class="case-num" aria-hidden="true">Case study 03</span>
+            <span class="case-tag tag-enterprise">Consumer app</span>
+            <div class="case-thumb" role="img" aria-label="Goodreads case study cover">[ Screen export ]</div>
+          </div>
+          <div class="case-right">
+            <h2 class="case-title">Redesigning reading into a habit worth keeping</h2>
+            <p class="case-desc">A research-driven speculative redesign of Goodreads — shifting the product from a social-first directory to a reading-first companion that respects how people actually track books.</p>
+            <div class="case-footer-row">
+              <span class="case-tools" aria-label="Tools used">Figma · UX Research · App Store Reviews</span>
+              <a class="case-arrow" href="goodreads.html" aria-label="View Goodreads case study">View case study</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="case-item fade-in" role="listitem" aria-label="Case study 04: Coming soon" aria-disabled="true" style="opacity:0.4;pointer-events:none;">
+          <div class="case-left">
+            <span class="case-num" aria-hidden="true">Case study 04</span>
+            <span class="case-tag tag-enterprise">Coming soon</span>
+            <div class="case-thumb" aria-hidden="true">—</div>
+          </div>
+          <div class="case-right">
+            <h2 class="case-title">More work in progress</h2>
+            <p class="case-desc">A fourth case study is on its way. Check back soon.</p>
+            <div class="case-footer-row">
+              <span class="case-tools" aria-hidden="true">—</span>
+              <span class="case-arrow" aria-hidden="true">Coming soon</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="process" aria-labelledby="process-heading">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div>
+          <div class="section-number" aria-hidden="true">02</div>
+          <h3 id="process-heading">How I work</h3>
+        </div>
+        <div>
+          <h2>A process built around reducing ambiguity</h2>
+          <p>I work through complexity by making it legible — to users, to stakeholders, and to the teams building the product.</p>
+        </div>
+      </div>
+      <div class="process-pipeline fade-in" role="list" aria-label="Design process steps">
+        <div class="pipe-step" role="listitem"><div class="pipe-icon" aria-hidden="true">STEP 01</div><div class="pipe-label">Discover</div><div class="pipe-sub">Research, interviews, and understanding the full problem space.</div></div>
+        <div class="pipe-step" role="listitem"><div class="pipe-icon" aria-hidden="true">STEP 02</div><div class="pipe-label">Define</div><div class="pipe-sub">Synthesising insights into clear problem statements and measurable goals.</div></div>
+        <div class="pipe-step" role="listitem"><div class="pipe-icon" aria-hidden="true">STEP 03</div><div class="pipe-label">Design</div><div class="pipe-sub">Iterating from wireframes to high-fidelity, testable prototypes.</div></div>
+        <div class="pipe-step" role="listitem"><div class="pipe-icon" aria-hidden="true">STEP 04</div><div class="pipe-label">Test</div><div class="pipe-sub">Validating with real users and refining based on findings.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" aria-labelledby="skills-heading">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div>
+          <div class="section-number" aria-hidden="true">03</div>
+          <h3 id="skills-heading">Skills & tools</h3>
+        </div>
+        <div>
+          <h2>What I bring to the table</h2>
+          <p>A mix of design craft, research rigour, and domain depth — with a particular focus on AI-augmented workflows, healthcare systems, and enterprise data products.</p>
+        </div>
+      </div>
+      <div class="stat-grid fade-in" role="list" aria-label="Career highlights">
+        <div class="stat-cell" role="listitem"><div class="stat-num">4+</div><div class="stat-desc">years designing for healthcare and enterprise domains</div></div>
+        <div class="stat-cell" role="listitem"><div class="stat-num">AI-first</div><div class="stat-desc">designing with and for AI systems — trust, explainability, and human oversight</div></div>
+        <div class="stat-cell" role="listitem"><div class="stat-num">End-to-end</div><div class="stat-desc">research through delivery, concept through system design</div></div>
+      </div>
+      <div class="skill-categories fade-in">
+        <div>
+          <div class="skill-cat-label" id="design-skills">Design & craft</div>
+          <ul class="skill-pills" aria-labelledby="design-skills" role="list" style="list-style:none;">
+            <li class="skill-pill">Figma</li><li class="skill-pill">Prototyping</li><li class="skill-pill">Interaction design</li><li class="skill-pill">Design systems</li><li class="skill-pill">Data visualisation</li><li class="skill-pill">Accessibility</li>
+          </ul>
+        </div>
+        <div>
+          <div class="skill-cat-label" id="research-skills">Research & strategy</div>
+          <ul class="skill-pills" aria-labelledby="research-skills" role="list" style="list-style:none;">
+            <li class="skill-pill">UX research</li><li class="skill-pill">Usability testing</li><li class="skill-pill">Journey mapping</li><li class="skill-pill">AI UX</li><li class="skill-pill">Healthcare UX</li><li class="skill-pill">Enterprise products</li>
+          </ul>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+</main>
 
 <div class="container">
-  <footer class="fade-in">
+  <footer id="contact" role="contentinfo">
     <span class="footer-note">Sharika · AI-Enhanced Product Designer · 2026</span>
-    <div class="footer-links">
-      <a>Email</a>
-    </div>
+    <nav class="footer-links" aria-label="Contact and social links">
+      <a href="mailto:sharikabenny@gmail.com" aria-label="Email Sharika">Email</a>
+      <a href="#" aria-label="LinkedIn profile">LinkedIn</a>
+      <a href="#" aria-label="Dribbble profile">Dribbble</a>
+    </nav>
   </footer>
 </div>
 
 <script>
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.08 });
-document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+  const root = document.documentElement;
+  const toggle = document.getElementById('themeToggle');
+  const icon = document.getElementById('toggleIcon');
+  const label = document.getElementById('toggleLabel');
+
+  // Read saved preference
+  const saved = localStorage.getItem('theme') || 'light';
+  applyTheme(saved);
+
+  toggle.addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    applyTheme(next);
+    localStorage.setItem('theme', next);
+  });
+
+  function applyTheme(theme) {
+    root.setAttribute('data-theme', theme);
+    if (theme === 'dark') {
+      icon.textContent = '☀️';
+      label.textContent = 'Light';
+      toggle.setAttribute('aria-label', 'Switch to light mode');
+    } else {
+      icon.textContent = '🌙';
+      label.textContent = 'Dark';
+      toggle.setAttribute('aria-label', 'Switch to dark mode');
+    }
+  }
+
+  // Fade in
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
 </script>
 </body>
 </html>
