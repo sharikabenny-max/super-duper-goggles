@@ -7,48 +7,32 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
   <style>
-    .menu-toggle{
+    ..menu-toggle{
   display:none;
   background:none;
   border:none;
-  font-size:22px;
+  font-size:32px;
+  line-height:1;
   cursor:pointer;
   color:var(--ink);
+  padding:0;
+  margin-left:auto;
+  margin-right:14px;
+  flex-shrink:0;
+  z-index:1100;
 }
 
 @media (max-width:768px){
+  .menu-toggle{
+    display:block;
+  }
 
   .nav-links{
-    position:absolute;
-    top:56px;
-    left:0;
-    right:0;
-    background:var(--paper);
-    border-bottom:1px solid var(--rule);
     display:none;
-    flex-direction:column;
-    gap:0;
-    padding:.5rem 1rem;
-    z-index:999;
   }
 
   .nav-links.open{
     display:flex;
-  }
-
-  .nav-links li{
-    padding:0;
-  }
-
-  .nav-links a{
-    display:block;
-    padding:.9rem 0;
-    font-size:15px;
-    border-bottom:1px solid var(--rule);
-  }
-
-  .nav-links li:last-child a{
-    border-bottom:none;
   }
 }
 :root[data-theme="light"] {
@@ -283,9 +267,9 @@
 <nav>
   <a class="nav-logo" href="index.html">← Sharika Benny</a>
 
-  <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
-    ☰
-  </button>
+ <button class="menu-toggle" id="menuToggle">
+☰
+</button>
 
   <ul class="nav-links" id="navMenu">
     <li><a href="#problem">Problem</a></li>
