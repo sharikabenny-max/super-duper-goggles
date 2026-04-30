@@ -7,6 +7,50 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
   <style>
+    .menu-toggle{
+  display:none;
+  background:none;
+  border:none;
+  font-size:22px;
+  cursor:pointer;
+  color:var(--ink);
+}
+
+@media (max-width: 768px){
+
+  nav{
+    padding:0 1rem;
+  }
+
+  .menu-toggle{
+    display:block;
+  }
+
+  .nav-links{
+    position:absolute;
+    top:56px;
+    left:0;
+    right:0;
+    background:var(--paper);
+    border-bottom:1px solid var(--rule);
+    flex-direction:column;
+    gap:0;
+    display:none;
+    padding:1rem;
+  }
+
+  .nav-links.open{
+    display:flex;
+  }
+
+  .nav-links li{
+    padding:.8rem 0;
+  }
+
+  .theme-toggle{
+    margin-left:auto;
+  }
+}
     .nav-links a.active{
   color: var(--ink);
   font-weight: 500;
@@ -252,9 +296,13 @@
 <body>
 
 <nav>
-  <a class="nav-logo" href="index.html" style="text-decoration:none;">← Sharika Benny</a>
+  <a class="nav-logo" href="index.html">← Sharika Benny</a>
 
-  <ul class="nav-links">
+  <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
+    ☰
+  </button>
+
+  <ul class="nav-links" id="navMenu">
     <li><a href="#problem">Problem</a></li>
     <li><a href="#research">Research</a></li>
     <li><a href="#users">Users</a></li>
@@ -264,7 +312,7 @@
     <li><a href="#transformation">Transformation</a></li>
   </ul>
 
-  <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+  <button class="theme-toggle" id="themeToggle">
     <span id="toggleIcon">🌙</span>
     <span id="toggleLabel">Dark</span>
   </button>
@@ -601,6 +649,11 @@
   })();
 
   document.addEventListener('DOMContentLoaded', function() {
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+    menuToggle.addEventListener('click', function(){
+      navMenu.classList.toggle('open');
+    });
     const root = document.documentElement;
     const toggle = document.getElementById('themeToggle');
     const icon = document.getElementById('toggleIcon');
@@ -649,11 +702,16 @@ const navObserver = new IntersectionObserver(function(entries){
     }
   });
 },{
-  threshold: 0.45
+  rootMargin: "-30% 0px -55% 0px"
 });
 
 sections.forEach(function(section){
   navObserver.observe(section);
+});
+  navLinks.forEach(link=>{
+  link.addEventListener('click', ()=>{
+    navMenu.classList.remove('open');
+  });
 });
 </script>
 </body>
