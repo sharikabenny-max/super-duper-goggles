@@ -396,7 +396,7 @@ nav{
       </div>
       <div>
         <h2>Unstructured records create gaps that the plan can't close</h2>
-        <p>Health plans operating in risk adjustment ecosystems like UST HealthProof’s often face a persistent challenge: records arrive as PDFs, scanned documents, and handwritten notes—making diagnosis capture slow and inconsistent. When chronic conditions are missed or uncoded, HCC scores may be incomplete, increasing audit risk and plan mismatch.</p>
+        <p>Health plans operating in risk adjustment ecosystems like UST HealthProof’s often face a persistent challenge: records arrive as PDFs, scanned documents, and handwritten notes, thereby making diagnosis capture slow and inconsistent. When chronic conditions are missed or uncoded, HCC scores may be incomplete, increasing audit risk and plan mismatch.</p>
         <p>The issue cascades across the care pipeline: coders can miss conditions hidden in chart notes, enrollment analysts may make tier decisions on incomplete data, and providers may start visits without a clear view of the patient’s known conditions.</p>
       </div>
     </div>
@@ -466,7 +466,7 @@ nav{
       <div class="user-card">
         <div class="user-role">Tertiary · Provider-side</div>
         <div class="user-name">Physician / care provider</div>
-        <div class="user-goal">Sees a pre-visit briefing with clinical context — conditions to confirm, open care gaps. Needs clinical framing, not billing language.</div>
+        <div class="user-goal">Sees a pre-visit briefing with clinical context — conditions to confirm, open care gaps. This needs clinical framing, not billing language.</div>
       </div>
     </div>
   </div>
@@ -536,7 +536,7 @@ nav{
           <img src="screen-02.png" alt="Coder override interface showing an inline reason dropdown expanded with options: not documented, condition already coded, insufficient clinical evidence, incorrect code suggested, and other" style="width:100%;display:block;background:var(--paper-3);min-height:280px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="screen-placeholder" style="display:none;">[ Screen 02 — drop export here ]</div>
         </div>
-        <p class="screen-caption">Override expands inline — no modal or navigation away from the queue. A required reason dropdown surfaces five options: not documented in this record, condition already coded, insufficient clinical evidence, incorrect code suggested, and other. Selecting "Incorrect code suggested" would reveal a code substitution field, feeding a correction signal back to the AI model. Friction is calibrated to the flag's confidence — high-confidence overrides require a reason; lower-confidence ones do not.</p>
+        <p class="screen-caption">Override expands inline, no modals or navigations away from the queue. A required reason dropdown surfaces five options: not documented in this record, condition already coded, insufficient clinical evidence, incorrect code suggested, and other. Selecting "Incorrect code suggested" would reveal a code substitution field, feeding a correction signal back to the AI model. Friction is calibrated to the flag's confidence, whereby high-confidence overrides require a reason; lower-confidence ones do not.</p>
       </div>
 
       <div class="screen-block fade-in">
@@ -549,7 +549,7 @@ nav{
           <img src="screen-03.png" alt="Enrollment segmentation dashboard showing four KPI tiles, a filterable member table with risk tiers and HCC gap status, and an expanded profile drawer for Arjun Menon showing RAF score, confirmed HCC codes, and a plan match recommendation at 94% confidence" style="width:100%;display:block;background:var(--paper-3);min-height:280px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="screen-placeholder" style="display:none;">[ Screen 03 — drop export here ]</div>
         </div>
-        <p class="screen-caption">Shared by risk adjustment and enrollment ops. Four KPI tiles surface the pipeline at a glance: 247 members pending segmentation, 84 high risk, 12 flagged for critical review, and a 91% HCC gap closure rate. Each member row shows risk tier, gap status, and plan match. Expanding a row (shown for Arjun Menon) reveals the RAF score bar, confirmed HCC codes, and a plan match recommendation with confidence score — all actionable with Confirm, Export, or Override.</p>
+        <p class="screen-caption">Shared by risk adjustment and enrollment ops. Four KPI tiles surface the pipeline at a glance: 247 members pending segmentation, 84 high risk, 12 flagged for critical review, and a 91% HCC gap closure rate. Each member row shows risk tier, gap status, and plan match. Expanding a row (shown for Arjun Menon) reveals the RAF score bar, confirmed HCC codes, and a plan match recommendation with confidence score. There are all actionable with Confirm, Export, or Override.</p>
       </div>
 
       <div class="screen-block fade-in">
@@ -562,7 +562,7 @@ nav{
           <img src="screen-04.png" alt="EHR-embedded pre-visit briefing panel showing patient complexity badge, four conditions to confirm with Active/Uncertain/Resolved toggles, and two open care gaps including a high-priority HbA1c flag" style="width:100%;display:block;background:var(--paper-3);min-height:280px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="screen-placeholder" style="display:none;">[ Screen 04 — drop export here ]</div>
         </div>
-        <p class="screen-caption">A sidebar panel embedded in the existing EHR alongside the patient chart. No ICD-10 codes visible — condition names only, keeping the frame clinical rather than billing-oriented. Four conditions are listed with Active / Uncertain / Resolved toggles for the provider to confirm currency at the visit. Below, two open care gaps are framed as clinical recommendations: a high-priority HbA1c flag and a nephrology referral. The CDI nudge appears last, after clinical context has established trust.</p>
+        <p class="screen-caption">A sidebar panel embedded in the existing EHR alongside the patient chart. No ICD-10 codes are visible, except for condition codes, keeping the frame clinical rather than billing-oriented. Four conditions are listed with Active / Uncertain / Resolved toggles for the provider to confirm currency at the visit. Below, two open care gaps are framed as clinical recommendations: a high-priority HbA1c flag and a nephrology referral. The CDI nudge appears last, after clinical context has established trust.</p>
       </div>
 
     </div>
@@ -593,19 +593,19 @@ nav{
       </li>
       <li>
         <div class="decision-key">Explainable AI & Trust: Evidence snippets are non-negotiable on every flagged condition</div>
-        <div class="decision-why">Without the source text, the AI is a black box. Showing the exact phrase that triggered each flag turns the system into a reference tool — the right power dynamic for certified coders who will not accept unjustified outputs.</div>
+        <div class="decision-why">Without the source text, the AI is a black box. Showing the exact phrase that triggered each flag turns the system into a reference tool, which would be the right power dynamic for certified coders who will not accept unjustified outputs.</div>
       </li>
       <li>
         <div class="decision-key">Override friction is calibrated to AI confidence, not applied uniformly</div>
-        <div class="decision-why">A high-confidence override warrants a required reason — the disagreement is statistically significant. A needs-review override warrants optional friction — the system itself was already uncertain. Treating both the same would frustrate coders on flags that the AI didn't trust either.</div>
+        <div class="decision-why">A high-confidence override warrants a required reason as the disagreement is statistically significant. However, a needs-review override warrants optional friction, as the system itself was already uncertain. Treating both the same would frustrate coders on flags that the AI didn't trust either.</div>
       </li>
       <li>
         <div class="decision-key">Gap reasons map to organisational ownership, not just status</div>
-        <div class="decision-why">"Missing record" is a provider outreach problem. "Insufficient documentation" is a CDI problem. "Document quality failure" is an ops or IT problem. Naming reasons this way makes each gap immediately routable to the right team — not just visible on screen.</div>
+        <div class="decision-why">"Missing record" is a provider outreach problem. "Insufficient documentation" is a CDI problem. "Document quality failure" is an ops or IT problem. Naming reasons this way makes each gap immediately routable to the right team, not just visible on screen.</div>
       </li>
       <li>
         <div class="decision-key">ICD-10 codes are hidden from providers entirely</div>
-        <div class="decision-why">The moment a provider sees coding language, the interaction reads as billing. Showing condition names only keeps the frame clinical — and the provider's attention on the patient, not the plan.</div>
+        <div class="decision-why">The moment a provider sees coding language, the interaction reads as billing. Showing condition names only keeps the frame clinical and the provider's attention on the patient, not the plan.</div>
       </li>
     </ul>
   </div>
