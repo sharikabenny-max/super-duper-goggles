@@ -190,9 +190,16 @@
   margin-bottom: 1.5rem;
   max-width: 620px;       /* same constraint as hero-title */
 }
-  .cta-visual img {
+  .cta-visual {
   width: 100%;
-  max-width: 220px;   /* 👈 control size here */
+  display: flex;
+  justify-content: flex-end;   /* 👈 pushes it to the right edge */
+  margin-top: 2rem;
+}
+
+.cta-visual img {
+  max-width: 200px;            /* keep it controlled */
+  width: 100%;
   height: auto;
 }
 .cta-sub {
@@ -379,26 +386,25 @@
     
     <!-- LEFT: TEXT -->
     <div class="cta-content">
-      <p class="hero-eyebrow">Available for new opportunities</p>
+  <p class="hero-eyebrow">Available for new opportunities</p>
 
-      <h2 class="cta-title">
-        Open to UX roles and meaningful design work
-      </h2>
+  <h2 class="cta-title">
+    Open to UX roles and meaningful design work
+  </h2>
 
-      <p class="cta-sub">
-        If you’re building thoughtful, complex products, I’d love to be part of it.
-      </p>
+  <p class="cta-sub">
+    If you’re building thoughtful, complex products, I’d love to be part of it.
+  </p>
 
-      <div class="hero-actions">
-        <a href="mailto:sharikabenny@gmail.com" class="btn-primary">Email me</a>
-        <a href="https://www.linkedin.com/in/sharika-b-89a00021a/" target="_blank" class="btn-secondary">LinkedIn</a>
-      </div>
-    </div>
+  <div class="hero-actions">
+    <a href="mailto:..." class="btn-primary">Email me</a>
+    <a href="..." class="btn-secondary">LinkedIn</a>
+  </div>
 
-    <!-- RIGHT: ILLUSTRATION -->
-    <div class="cta-visual">
-      <img src="illustration.png" alt="Illustration representing connection and creativity">
-    </div>
+  <!-- 👇 Illustration as separate row -->
+  <div class="cta-visual">
+    <img src="your-illustration.png" alt="">
+  </div>
 
   </div>
 </section>
