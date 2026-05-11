@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LabLens — Sharika</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0F0E0D; --ink-2: #3D3B38; --ink-3: #2E2C2A; --ink-4: #4A4845;
+    --paper: #F5F2EE; --paper-2: #EDE9E3; --paper-3: #E2DDD6;
+    --accent: #1B4332; --accent-light: #D8F3DC; --accent-mid: #52B788;
+    --warn: #7B3F00; --warn-light: #FDEBD0;
+    --info: #1A3A5C; --info-light: #D6E8FA;
+    --danger: #6B1C1C; --danger-light: #FDDEDE;
+    --rule: rgba(15,14,13,0.1);
+    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.7; font-weight: 300; }
+
+  .skip-link { position: absolute; top: -100%; left: 1rem; background: var(--accent); color: #fff; padding: 8px 16px; border-radius: 4px; font-family: var(--font-mono); font-size: 12px; text-decoration: none; z-index: 200; }
+  .skip-link:focus { top: 1rem; }
+
+  nav { position: sticky; top: 0; z-index: 100; background: var(--paper); border-bottom: 1px solid var(--rule); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+  .nav-logo { font-family: var(--font-mono); font-size: 13px; font-weight: 500; color: var(--ink); letter-spacing: 0.04em; text-decoration: none; }
+  .nav-logo:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 12px; color: var(--ink-3); text-decoration: none; letter-spacing: 0.03em; transition: color 0.15s; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
+
+  .container { max-width: 780px; margin: 0 auto; padding: 0 2rem; }
+  .container-wide { max-width: 1040px; margin: 0 auto; padding: 0 2rem; }
+  section { padding: 5rem 0; border-bottom: 1px solid var(--rule); }
+  section:last-child { border-bottom: none; }
+
+  .hero { padding: 7rem 0 5rem; border-bottom: 1px solid var(--rule); }
+  .hero-eyebrow { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--ink-3); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px; }
+  .hero-eyebrow::before { content: ''; display: block; width: 24px; height: 1px; background: var(--ink-4); }
+  .hero-title { font-family: var(--font-display); font-size: clamp(2.2rem, 5vw, 3.6rem); line-height: 1.1; font-weight: 400; color: var(--ink); margin-bottom: 1.5rem; max-width: 640px; }
+  .hero-title em { font-style: italic; color: var(--accent); }
+  .hero-sub { font-size: 17px; font-weight: 300; color: var(--ink-2); max-width: 520px; line-height: 1.65; margin-bottom: 0.75rem; }
+  .hero-disclaimer { font-family: var(--font-mono); font-size: 10px; color: var(--ink-4); letter-spacing: 0.05em; margin-bottom: 2.5rem; }
+  .hero-meta { display: flex; gap: 2rem; flex-wrap: wrap; }
+  .meta-item { display: flex; flex-direction: column; gap: 3px; }
+  .meta-label { font-family: var(--font-mono); font-size: 10px; color: var(--ink-4); letter-spacing: 0.08em; text-transform: uppercase; }
+  .meta-val { font-size: 13px; font-weight: 500; color: var(--ink-2); }
+
+  h2 { font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2.1rem); font-weight: 400; line-height: 1.2; color: var(--ink); margin-bottom: 1.25rem; }
+  h3 { font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--ink-3); letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 1rem; }
+  p { color: var(--ink-2); margin-bottom: 1rem; font-weight: 300; }
+  p:last-child { margin-bottom: 0; }
+  .section-header { display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start; margin-bottom: 3rem; }
+  .section-number { font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); letter-spacing: 0.06em; margin-bottom: 0.5rem; }
+
+  .problem-quote { border-left: 2px solid var(--accent); padding: 1.25rem 1.5rem; background: var(--paper-2); border-radius: 0 8px 8px 0; margin: 2rem 0; }
+  .problem-quote p { font-family: var(--font-display); font-size: 1.1rem; font-style: italic; color: var(--ink); line-height: 1.5; margin: 0; }
+  .problem-quote cite { display: block; font-family: var(--font-mono); font-size: 10px; color: var(--ink-4); letter-spacing: 0.06em; margin-top: 0.5rem; font-style: normal; }
+
+  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; margin: 2.5rem 0; }
+  .stat-cell { background: var(--paper); padding: 1.5rem; }
+  .stat-num { font-family: var(--font-display); font-size: 2rem; font-weight: 400; color: var(--accent); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-desc { font-size: 12px; color: var(--ink-3); line-height: 1.4; }
+
+  .decision-list { list-style: none; margin: 1.5rem 0; }
+  .decision-list li { padding: 1rem 0; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 2fr 3fr; gap: 2rem; }
+  .decision-list li:last-child { border-bottom: none; }
+  .decision-key { font-size: 13px; font-weight: 500; color: var(--ink); line-height: 1.4; }
+  .decision-why { font-size: 13px; color: var(--ink-3); line-height: 1.5; }
+
+  .journey { display: flex; align-items: stretch; border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; margin: 2rem 0; }
+  .journey-step { flex: 1; padding: 1.25rem 1rem; border-right: 1px solid var(--rule); background: var(--paper); text-align: center; }
+  .journey-step:last-child { border-right: none; }
+  .journey-icon { font-size: 1.25rem; margin-bottom: 0.4rem; }
+  .journey-label { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 0.25rem; }
+  .journey-sub { font-size: 11px; color: var(--ink-3); line-height: 1.4; }
+
+  .feature-table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-size: 13px; }
+  .feature-table th { font-family: var(--font-mono); font-size: 10px; font-weight: 500; color: var(--ink-4); letter-spacing: 0.08em; text-transform: uppercase; padding: 0.75rem 1rem; border-bottom: 1px solid var(--rule); text-align: left; background: var(--paper-2); }
+  .feature-table td { padding: 0.875rem 1rem; border-bottom: 1px solid var(--rule); color: var(--ink-3); vertical-align: top; line-height: 1.5; }
+  .feature-table tr:last-child td { border-bottom: none; }
+  .feature-table td:first-child { font-weight: 500; color: var(--ink-2); }
+
+  /* FIGMA EMBED */
+  .figma-embed-block { margin: 3rem 0; }
+  .figma-label { font-family: var(--font-mono); font-size: 10px; font-weight: 500; color: var(--ink-4); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.75rem; }
+  .figma-wrapper { border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; background: var(--paper-3); }
+  .figma-wrapper iframe { display: block; width: 100%; border: none; }
+  .figma-caption { font-size: 13px; color: var(--ink-3); margin-top: 1rem; font-style: italic; }
+
+  .screen-block { margin: 3rem 0; }
+  .screen-label { display: flex; align-items: center; gap: 12px; margin-bottom: 1rem; }
+  .screen-tag { font-family: var(--font-mono); font-size: 10px; font-weight: 500; padding: 3px 10px; border-radius: 20px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .tag-1 { background: var(--danger-light); color: var(--danger); }
+  .tag-2 { background: var(--warn-light); color: var(--warn); }
+  .tag-3 { background: var(--info-light); color: var(--info); }
+  .tag-4 { background: var(--accent-light); color: var(--accent); }
+  .tag-5 { background: #F3E8FF; color: #5B21B6; }
+  .screen-name { font-size: 13px; font-weight: 500; color: var(--ink-2); }
+  .screen-frame { border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; background: var(--paper-3); }
+  .screen-frame-bar { background: var(--paper-2); border-bottom: 1px solid var(--rule); padding: 8px 14px; display: flex; align-items: center; gap: 6px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--rule); }
+  .screen-placeholder { min-height: 280px; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 10px; color: var(--ink-4); letter-spacing: 0.06em; }
+  .screen-caption { font-size: 13px; color: var(--ink-3); margin-top: 1rem; font-style: italic; }
+
+  .impact-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 2rem 0; }
+  .impact-card { background: var(--paper-2); border: 1px solid var(--rule); border-radius: 10px; padding: 1.25rem; }
+  .impact-metric { font-family: var(--font-display); font-size: 1.5rem; color: var(--accent); margin-bottom: 0.3rem; }
+  .impact-label { font-size: 12px; color: var(--ink-3); line-height: 1.4; }
+
+  footer { padding: 3rem 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+  .footer-note { font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); letter-spacing: 0.04em; }
+  .footer-link { font-family: var(--font-mono); font-size: 11px; color: var(--accent); letter-spacing: 0.04em; text-decoration: none; }
+  .footer-link:hover { text-decoration: underline; }
+  .footer-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
+
+  .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .fade-in.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 640px) {
+    .section-header, .decision-list li { grid-template-columns: 1fr; gap: 1rem; }
+    .stat-grid, .impact-grid { grid-template-columns: 1fr; }
+    .journey { flex-direction: column; }
+    .journey-step { border-right: none; border-bottom: 1px solid var(--rule); }
+    .journey-step:last-child { border-bottom: none; }
+    .nav-links { display: none; }
+    .feature-table { font-size: 12px; }
+    .feature-table th, .feature-table td { padding: 0.625rem 0.75rem; }
+    .figma-wrapper iframe { height: 300px; }
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<nav aria-label="Main navigation">
+  <a class="nav-logo" href="index.html" aria-label="Back to Sharika's portfolio">← Sharika</a>
+  <ul class="nav-links" role="list">
+    <li><a href="#problem" aria-label="Jump to problem section">Problem</a></li>
+    <li><a href="#strategy" aria-label="Jump to strategy section">Strategy</a></li>
+    <li><a href="#features" aria-label="Jump to features section">Features</a></li>
+    <li><a href="#screens" aria-label="Jump to screens section">Screens</a></li>
+    <li><a href="#impact" aria-label="Jump to impact section">Impact</a></li>
+  </ul>
+</nav>
+
+<main id="main-content">
+
+  <div class="hero">
+    <div class="container">
+      <p class="hero-eyebrow" aria-label="Portfolio case study — LabLens product concept">Portfolio case study · Product concept</p>
+      <h1 class="hero-title">Turning medical reports into <em>clarity, not anxiety</em></h1>
+      <p class="hero-sub">LabLens is an AI-powered mobile app that helps non-medical users understand their lab results, prepare for doctor visits, and take confident, informed next steps — without the overwhelm.</p>
+      <p class="hero-disclaimer">Conceptual product design project for portfolio purposes. LabLens is not a diagnostic tool. All recommendations to consult a healthcare professional are preserved.</p>
+      <dl class="hero-meta" aria-label="Project details">
+        <div class="meta-item"><dt class="meta-label">Role</dt><dd class="meta-val">Product designer</dd></div>
+        <div class="meta-item"><dt class="meta-label">Type</dt><dd class="meta-val">Product concept</dd></div>
+        <div class="meta-item"><dt class="meta-label">Domain</dt><dd class="meta-val">Healthcare · AI · Mobile</dd></div>
+        <div class="meta-item"><dt class="meta-label">Screens</dt><dd class="meta-val">5 connected surfaces</dd></div>
+      </dl>
+    </div>
+  </div>
+
+  <!-- PROBLEM -->
+  <section id="problem" aria-labelledby="problem-heading">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div>
+          <div class="section-number" aria-hidden="true">01</div>
+          <h2 id="problem-heading">The problem</h2>
+        </div>
+        <div>
+          <h3>Medical reports arrive — and most people have no idea what they mean</h3>
+          <p>Non-medical users frequently receive lab results they cannot interpret. Values like HbA1c, creatinine, or TSH are presented without context, in formats designed for clinicians rather than patients. The result is cognitive overload, unnecessary anxiety, and delayed or uninformed health decisions.</p>
+          <p>The problem is especially acute for older adults and those in lower-access communities, where health literacy is lower and digital tools rarely account for the emotional weight of receiving an unclear result.</p>
+        </div>
+      </div>
+      <div class="stat-grid fade-in" role="list" aria-label="Key problem signals">
+        <div class="stat-cell" role="listitem">
+          <div class="stat-num">9 in 10</div>
+          <div class="stat-desc">adults in India lack sufficient health literacy to act on medical information independently</div>
+        </div>
+        <div class="stat-cell" role="listitem">
+          <div class="stat-num">↑ Anxiety</div>
+          <div class="stat-desc">receiving unclear results increases health anxiety even when values are within normal range</div>
+        </div>
+        <div class="stat-cell" role="listitem">
+          <div class="stat-num">Delayed care</div>
+          <div class="stat-desc">confusion at the report stage leads to delayed doctor visits and missed early intervention opportunities</div>
+        </div>
+      </div>
+      <blockquote class="problem-quote fade-in">
+        <p>"I just want to know if something is wrong — and what I should do about it."</p>
+        <cite>— Primary persona, LabLens user research</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- STRATEGY -->
+  <section id="strategy" aria-labelledby="strategy-heading">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div>
+          <div class="section-number" aria-hidden="true">02</div>
+          <h2 id="strategy-heading">Design strategy</h2>
+        </div>
+        <div>
+          <h3>Seven principles, one guided journey</h3>
+          <p>The design strategy centres on a single organising idea: structure the experience as a journey, not a feature list. Every screen follows the user's intent — Understand → Act → Prepare → Seek Help — rather than separating capabilities into disconnected sections.</p>
+        </div>
+      </div>
+      <div class="journey fade-in" role="list" aria-label="User journey stages">
+        <div class="journey-step" role="listitem">
+          <div class="journey-icon" aria-hidden="true">🔍</div>
+          <div class="journey-label">Understand</div>
+          <div class="journey-sub">Simplify and explain what the report says</div>
+        </div>
+        <div class="journey-step" role="listitem">
+          <div class="journey-icon" aria-hidden="true">⚡</div>
+          <div class="journey-label">Act</div>
+          <div class="journey-sub">Pair every insight with a clear next step</div>
+        </div>
+        <div class="journey-step" role="listitem">
+          <div class="journey-icon" aria-hidden="true">📋</div>
+          <div class="journey-label">Prepare</div>
+          <div class="journey-sub">Equip users for their doctor consultation</div>
+        </div>
+        <div class="journey-step" role="listitem">
+          <div class="journey-icon" aria-hidden="true">🏥</div>
+          <div class="journey-label">Seek Help</div>
+          <div class="journey-sub">Reduce friction in accessing professional care</div>
+        </div>
+      </div>
+      <ul class="decision-list fade-in" aria-label="Seven design principles">
+        <li>
+          <div class="decision-key">Simplify before informing</div>
+          <div class="decision-why">Break complex reports into clear, digestible summaries before presenting detail. Reducing cognitive load is the first job — comprehension follows clarity.</div>
+        </li>
+        <li>
+          <div class="decision-key">Add meaning through context</div>
+          <div class="decision-why">A number without context is noise. Translating values into plain language — and explaining what they mean for this user's health — is where real understanding begins.</div>
+        </li>
+        <li>
+          <div class="decision-key">Guide users toward action</div>
+          <div class="decision-why">Every insight is paired with a next step: monitor, adjust lifestyle, or consult a doctor. Information without direction creates anxiety; direction creates confidence.</div>
+        </li>
+        <li>
+          <div class="decision-key">Personalise the experience</div>
+          <div class="decision-why">Explanations and recommendations adapt to the user's health history and past reports — making guidance feel relevant rather than generic.</div>
+        </li>
+        <li>
+          <div class="decision-key">Support confident doctor interactions</div>
+          <div class="decision-why">Suggested questions derived from report values help users arrive at consultations prepared — improving the quality of both the conversation and the care.</div>
+        </li>
+        <li>
+          <div class="decision-key">Design with emotional sensitivity</div>
+          <div class="decision-why">Calm, reassuring language reduces anxiety without obscuring severity. The tone always signals when attention is needed — never triggers panic where none is warranted.</div>
+        </li>
+        <li>
+          <div class="decision-key">Structure around user intent, not features</div>
+          <div class="decision-why">The app is organised as a guided journey so every screen feels like a natural next step, not a disconnected tool.</div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features" aria-labelledby="features-heading">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div>
+          <div class="section-number" aria-hidden="true">03</div>
+          <h2 id="features-heading">Feature matrix</h2>
+        </div>
+        <div>
+          <h3>Eight features, each mapped to a user need</h3>
+          <p>Every feature in LabLens was derived from a specific user need. Nothing was added for its own sake.</p>
+        </div>
+      </div>
+      <div class="fade-in" style="overflow-x:auto;">
+        <table class="feature-table" aria-label="LabLens feature matrix">
+          <thead>
+            <tr>
+              <th scope="col">User need</th>
+              <th scope="col">Feature</th>
+              <th scope="col">Value delivered</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Upload reports seamlessly</td><td>Quick photo or file upload on homepage</td><td>Simplicity of use and ease of access</td></tr>
+            <tr><td>Understand report values</td><td>AI-simplified report summary with status indicators</td><td>Reduces confusion and cognitive overload</td></tr>
+            <tr><td>Understand what results mean</td><td>Plain language explanations of medical terms</td><td>Improves comprehension and confidence</td></tr>
+            <tr><td>See health patterns over time</td><td>Trend analysis comparing current and past reports</td><td>Enables awareness and early action</td></tr>
+            <tr><td>Know what to do next</td><td>Actionable next steps — monitor, seek care, or adjust lifestyle</td><td>Helps users take informed action</td></tr>
+            <tr><td>Prepare for doctor visits</td><td>Suggested questions generated from report results</td><td>Improves quality of doctor consultations</td></tr>
+            <tr><td>Find medical support nearby</td><td>Nearby hospitals and clinics finder</td><td>Reduces friction in seeking care</td></tr>
+            <tr><td>Feel reassured and guided</td><td>Contextual reassurance with calibrated severity cues</td><td>Builds trust and reduces anxiety</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREENS -->
+  <section id="screens" aria-labelledby="screens-heading">
+    <div class="container-wide">
+      <div class="container" style="padding:0;">
+        <div class="section-header fade-in">
+          <div>
+            <div class="section-number" aria-hidden="true">04</div>
+            <h2 id="screens-heading">Screens</h2>
+          </div>
+          <div>
+            <h3>Five surfaces, one continuous journey</h3>
+            <p>Each screen corresponds to a stage in the user journey — from uploading a report to walking into a doctor's consultation prepared. Early layout directions were explored with AI-assisted tools, then refined and redesigned in Figma based on usability, accessibility, and product goals.</p>
+          </div>
+        </div>
+
+        <!-- FIGMA EMBED -->
+        <div class="figma-embed-block fade-in">
+          <p class="figma-label" aria-label="Interactive Figma prototype">Interactive prototype — explore in Figma</p>
+          <div class="figma-wrapper">
+            <iframe
+              title="LabLens interactive prototype in Figma"
+              style="border:none;"
+              width="800"
+              height="450"
+              src="https://embed.figma.com/design/iyLNYhHkVbklHXkm7IhM3L/Assessment-Sharika-Benny?node-id=40-2&embed-host=share"
+              allowfullscreen
+              aria-label="LabLens Figma prototype — interactive design exploration"
+            ></iframe>
+          </div>
+          <p class="figma-caption">The full prototype is embedded above — click through to explore the complete flow. Individual screens and design decisions are annotated below.</p>
+        </div>
+      </div>
+
+      <div class="container" style="padding:0;">
+
+        <div class="screen-block fade-in">
+          <div class="screen-label">
+            <span class="screen-tag tag-1" aria-label="Screen 1 of 5">Screen 01</span>
+            <span class="screen-name">Home — scan or upload a report</span>
+          </div>
+          <div class="screen-frame">
+            <div class="screen-frame-bar" aria-hidden="true"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+            <img src="lablens-screen-01.png" alt="LabLens home screen showing a Start a New Scan card with Take Photo and Upload File options, a privacy assurance message, and a bottom navigation bar with Home, Reports, and Profile tabs" style="width:100%;display:block;background:var(--paper-3);min-height:280px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="screen-placeholder" style="display:none;" aria-label="Screen 1 placeholder">[ Screen 01 — drop export here ]</div>
+          </div>
+          <p class="screen-caption">The home screen leads with the primary action — starting a scan — presented as a clear, prominent card. Two entry points (Take Photo and Upload File) cover how most users in the target audience actually receive their reports. A privacy reassurance message appears before the user commits, building trust at the moment of highest concern.</p>
+        </div>
+
+        <div class="screen-block fade-in">
+          <div class="screen-label">
+            <span class="screen-tag tag-2" aria-label="Screen 2 of 5">Screen 02</span>
+            <span class="screen-name">Key findings — contextual report summary</span>
+          </div>
+          <div class="screen-frame">
+            <div class="screen-frame-bar" aria-hidden="true"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+            <img src="lablens-screen-02.png" alt="Key Findings screen for a blood sugar report showing a plain-language summary, a Main Concerns section, and a value card for HbA1c at 6.1 percent with a Low to High status bar" style="width:100%;display:block;background:var(--paper-3);min-height:280px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="screen-placeholder" style="display:none;" aria-label="Screen 2 placeholder">[ Screen 02 — drop export here ]</div>
+          </div>
+          <p class="screen-caption">A plain-language opener leads before any numerical detail. HbA1c at 6.1% is shown with a visual status bar from Low to High, giving immediate spatial context. A "What this means" anchor invites deeper reading without forcing it.</p>
+        </div>
+
+        <div class="screen-block fade-in">
+          <div class="screen-label">
+            <span class="screen-tag tag-3" aria-label="Screen 3 of 5">Screen 03</span>
+            <span class="screen-name">Actionable next steps — conclusion and guidance</span>
+          </div>
+          <div class="screen-frame">
+            <div class="screen-frame-bar" aria-hidden="true"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+            <img src="lablens-screen-03.png" alt="Conclusion screen showing a reassuring summary with a medical disclaimer, followed by a Next Steps section with Consult a Doctor and Lifestyle Changes cards" style="width:100%;display:block;background:var(--paper-3);min-height:280px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="screen-placeholder" style="display:none;" aria-label="Screen 3 placeholder">[ Screen 03 — drop export here ]</div>
+          </div>
+          <p class="screen-caption">Every insight ends with direction. A prominent disclaimer ("This is not a medical diagnosis. Please consult a healthcare professional for confirmation") is placed immediately after the conclusion — not buried — ensuring the tool's purpose as an informer, not a diagnostician, is never obscured.</p>
+        </div>
+
+        <div class="screen-block fade-in">
+          <div class="screen-label">
+            <span class="screen-tag tag-4" aria-label="Screen 4 of 5">Screen 04</span>
+            <span class="screen-name">Doctor visit preparation — suggested questions</span>
+          </div>
+          <div class="screen-frame">
+            <div class="screen-frame-bar" aria-hidden="true"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+            <img src="lablens-screen-04.png" alt="Consult a Doctor screen showing a nearby clinic finder with filter chips, a result card for Trivandrum Medical College Hospital, and a Suggested Questions section listing three copyable questions" style="width:100%;display:block;background:var(--paper-3);min-height:280px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="screen-placeholder" style="display:none;" aria-label="Screen 4 placeholder">[ Screen 04 — drop export here ]</div>
+          </div>
+          <p class="screen-caption">Preparation for the consultation happens in the same flow as the report summary — not in a separate feature. Generated questions the user can bring to their appointment are each copyable, reducing friction at the point of consultation.</p>
+        </div>
+
+        <div class="screen-block fade-in">
+          <div class="screen-label">
+            <span class="screen-tag tag-5" aria-label="Screen 5 of 5">Screen 05</span>
+            <span class="screen-name">Integrated support — nearby care when needed</span>
+          </div>
+          <div class="screen-frame">
+            <div class="screen-frame-bar" aria-hidden="true"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+            <img src="lablens-screen-05.png" alt="Nearby hospitals screen with filterable results and a Call button" style="width:100%;display:block;background:var(--paper-3);min-height:280px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="screen-placeholder" style="display:none;" aria-label="Screen 5 placeholder">[ Screen 05 — drop export here ]</div>
+          </div>
+          <p class="screen-caption">When professional care is the right next step, LabLens removes the friction of finding it. The feature is embedded within the report journey — not separate — so the path from "I need to see a doctor" to taking action is as short as possible.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPACT -->
+  <section id="impact" aria-labelledby="impact-heading">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div>
+          <div class="section-number" aria-hidden="true">05</div>
+          <h2 id="impact-heading">Hypothesised impact</h2>
+        </div>
+        <div>
+          <h3>What success looks like</h3>
+          <p>As a product concept, impact is framed as hypotheses grounded in the documented user needs and behavioural patterns the design directly addresses.</p>
+        </div>
+      </div>
+      <div class="impact-grid fade-in" role="list" aria-label="Hypothesised impact metrics">
+        <div class="impact-card" role="listitem">
+          <div class="impact-metric" aria-label="Reduced anxiety">↓ Anxiety</div>
+          <div class="impact-label">Plain language explanations and calibrated tone reduce unnecessary fear without obscuring genuinely urgent signals</div>
+        </div>
+        <div class="impact-card" role="listitem">
+          <div class="impact-metric" aria-label="Improved comprehension">↑ Comprehension</div>
+          <div class="impact-label">Structured summaries and contextual status bars help users understand their values without a medical background</div>
+        </div>
+        <div class="impact-card" role="listitem">
+          <div class="impact-metric">Better visits</div>
+          <div class="impact-label">Users arrive at doctor consultations with relevant questions and report context — improving the quality of both the conversation and the care</div>
+        </div>
+        <div class="impact-card" role="listitem">
+          <div class="impact-metric" aria-label="Faster care">↓ Delay</div>
+          <div class="impact-label">Integrated clinic finder and timely prompts reduce the gap between a concerning result and seeking professional attention</div>
+        </div>
+        <div class="impact-card" role="listitem">
+          <div class="impact-metric" aria-label="Increased trust">↑ Trust</div>
+          <div class="impact-label">Consistent disclaimers and a clear non-diagnostic positioning build user trust in the tool — and in the healthcare system it connects them to</div>
+        </div>
+        <div class="impact-card" role="listitem">
+          <div class="impact-metric">Informed action</div>
+          <div class="impact-label">Every screen ends with a next step — shifting users from passive confusion to active, confident health decision-making</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="container">
+  <footer role="contentinfo">
+    <span class="footer-note">LabLens · Product concept · Sharika · 2026</span>
+    <a class="footer-link" href="mailto:sharikabenny@gmail.com" aria-label="Email Sharika at sharikabenny@gmail.com">Email me →</a>
+  </footer>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const s = document.createElement('style');
+    s.textContent = `
+      .screen-frame img { cursor:zoom-in; }
+      .lb { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.93); z-index:9999; align-items:center; justify-content:center; cursor:zoom-out; }
+      .lb.open { display:flex; }
+      .lb img { max-width:92vw; max-height:92vh; border-radius:8px; touch-action:pinch-zoom; cursor:default; object-fit:contain; }
+      .lb-close { position:fixed; top:1rem; right:1rem; background:rgba(255,255,255,0.12); border:none; color:#fff; font-size:1.25rem; width:38px; height:38px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+      .lb-close:hover { background:rgba(255,255,255,0.25); }
+      .lb-close:focus-visible { outline:2px solid #fff; outline-offset:3px; }
+      .lb-caption { position:fixed; bottom:1.5rem; left:50%; transform:translateX(-50%); color:rgba(255,255,255,0.6); font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.05em; white-space:nowrap; }
+      @media(max-width:640px) { .screen-frame img { max-height:240px; object-fit:cover; object-position:top; } }
+    `;
+    document.head.appendChild(s);
+
+    const lb = document.createElement('div');
+    lb.className = 'lb'; lb.id = 'lb';
+    lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true'); lb.setAttribute('aria-label', 'Image viewer');
+    lb.innerHTML = '<button class="lb-close" id="lbClose" aria-label="Close image viewer">✕</button><img id="lbImg" src="" alt=""><p class="lb-caption">Tap outside or press Esc to close · Pinch to zoom</p>';
+    document.body.appendChild(lb);
+
+    const lbEl = document.getElementById('lb');
+    const lbImg = document.getElementById('lbImg');
+
+    document.querySelectorAll('.screen-frame img').forEach(function(img) {
+      img.setAttribute('tabindex', '0');
+      img.setAttribute('role', 'button');
+      img.setAttribute('aria-label', 'View full size: ' + img.alt);
+      function open() { lbImg.src = img.src; lbImg.alt = img.alt; lbEl.classList.add('open'); document.body.style.overflow = 'hidden'; }
+      img.addEventListener('click', open);
+      img.addEventListener('keydown', function(e) { if (e.key === 'Enter' || e.key === ' ') open(); });
+    });
+
+    function closeLb() { lbEl.classList.remove('open'); document.body.style.overflow = ''; }
+    lbEl.addEventListener('click', function(e) { if (e.target !== lbImg) closeLb(); });
+    document.getElementById('lbClose').addEventListener('click', closeLb);
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLb(); });
+
+    const obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.fade-in').forEach(function(el) { obs.observe(el); });
+  });
+</script>
+</body>
+</html>
