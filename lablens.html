@@ -84,6 +84,25 @@
   .nav-links a:hover { color: var(--ink); }
   .nav-links a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
 
+  .theme-toggle {
+  background: var(--toggle-bg);
+  border: 1px solid var(--rule);
+  border-radius: 20px;
+  padding: 4px 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 88px;
+
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-3);
+  letter-spacing: 0.04em;
+  transition: background 0.2s;
+ }
+
   .container { max-width: 780px; margin: 0 auto; padding: 0 2rem; }
   .container-wide { max-width: 1040px; margin: 0 auto; padding: 0 2rem; }
   section { padding: 5rem 0; border-bottom: 1px solid var(--rule); }
