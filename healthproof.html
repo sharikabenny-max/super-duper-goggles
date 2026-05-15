@@ -82,36 +82,18 @@ nav{
     padding:0 14px;
   }
 
+  /* Hide nav links completely on mobile */
   .nav-links{
-    display:none;
-    position:absolute;
-    top:56px;
-    left:0;
-    right:0;
-    background:var(--paper);
-    border-bottom:1px solid var(--rule);
-    flex-direction:column;
-    gap:0;
-    padding:14px;
-    margin-left:0;
+    display:none !important;
   }
 
-  .nav-links.open{
-    display:flex;
-  }
-
- .nav-links{
-  display:flex;
-  gap:28px;
- }
-
+  /* Hide hamburger too */
   .menu-toggle{
-  display:block;
-  margin-left:0;
+    display:none;
   }
 
   .theme-toggle{
-    margin-left:0;
+    margin-left:auto;
     transform:scale(.9);
   }
 }
@@ -708,11 +690,6 @@ nav{
   })();
 
   document.addEventListener('DOMContentLoaded', function() {
-    const menuToggle = document.getElementById('menuToggle');
-    const navMenu = document.getElementById('navMenu');
-    menuToggle.addEventListener('click', function(){
-      navMenu.classList.toggle('open');
-    });
     const root = document.documentElement;
     const toggle = document.getElementById('themeToggle');
     const icon = document.getElementById('toggleIcon');
@@ -746,10 +723,6 @@ const navLinks = document.querySelectorAll('.nav-links a');
 const navObserver = new IntersectionObserver(function(entries){
   entries.forEach(function(entry){
     if(entry.isIntersecting){
-
-      navLinks.forEach(function(link){
-        link.classList.remove('active');
-      });
 
       const activeLink = document.querySelector(
         '.nav-links a[href="#' + entry.target.id + '"]'
