@@ -177,14 +177,16 @@
  }
   .screen-image-wrap{
   height:520px;
-    }
-
-  .screen-image-wrap img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center top;
+  overflow:hidden;
+  background:var(--paper-3);
   }
+
+.screen-image-wrap img{
+  width:100%;
+  display:block;
+
+  transform:translateY(-140px);
+}
   .screen-frame-bar { background: var(--paper-2); border-bottom: 1px solid var(--rule); padding: 8px 14px; display: flex; align-items: center; gap: 6px; }
   .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--rule); }
   .screen-placeholder { min-height: 280px; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 10px; color: var(--ink-4); letter-spacing: 0.06em; }
@@ -323,7 +325,7 @@
           </div>
           <div class="screen-frame">
             <div class="screen-frame-bar" aria-hidden="true"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-            <img src="bupa-before.png" alt="Original claims flow showing a web-adapted form with a generic Select the patient dropdown, a thin horizontal progress bar, and a long scrolling layout" style="width:100%;display:block;background:var(--paper-3);min-height:280px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="screen-image-wrap">  <img  src="bupa-before.png" alt="Original claims flow showing a web-adapted form with a generic Select the patient dropdown, a thin horizontal progress bar, and a long scrolling layout" onerror="this.style.display='none';this.parentElement.nextElementSibling.style.display='flex'" ></div>
             <div class="screen-placeholder" style="display:none;" aria-label="Original design placeholder">[ Original design — drop export here ]</div>
           </div>
           <p class="screen-caption">The original interface shows the hallmarks of a web-first form ported to mobile: a generic Select the patient dropdown, a thin horizontal progress bar with no step context, and a layout that requires scrolling to see the full form. There's no sense of where the user is in the journey or how much is left.</p>
