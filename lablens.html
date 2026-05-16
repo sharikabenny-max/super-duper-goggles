@@ -172,8 +172,19 @@
   .tag-4 { background: var(--accent-light); color: var(--accent); }
   .tag-5 { background: #F3E8FF; color: #5B21B6; }
   .screen-name { font-size: 13px; font-weight: 500; color: var(--ink-2); }
-  .screen-frame { border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; background: var(--paper-3);  max-width: 760px;   /* adjust this value */
-   margin: 0 auto; }
+  .screen-frame {
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--paper-3);
+
+  max-width: 760px;   /* adjust this value */
+  margin: 0 auto;     /* centers the frame */
+  }
+  .screen-frame img {
+  width: 100%;
+  display: block;
+  }
   .screen-frame-bar { background: var(--paper-2); border-bottom: 1px solid var(--rule); padding: 8px 14px; display: flex; align-items: center; gap: 6px; }
   .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--rule); }
   .screen-placeholder { min-height: 280px; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 10px; color: var(--ink-4); letter-spacing: 0.06em; }
